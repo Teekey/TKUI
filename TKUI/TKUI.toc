@@ -1,0 +1,18 @@
+## Interface: 90001
+## Title: |cffFF8C00TKUI|r an ElvUI Edit
+## Author: Teekey
+## Version: 1.0
+## Notes: |cffFF8C00TKUI|r an ElvUI Edit
+## RequiredDeps: ElvUI
+## OptionalDeps: Masque, LibStub, CallbackHandler-1.0, LibSharedMedia-3.0
+## X-oUF: TKUI
+
+Libs\Lib.xml
+Embeds\oUF\oUF.xml
+
+Media\Media.lua
+Tags\Tags.lua
+Main.lua
+Health.lua
+Skin.lua
+Installer.lua
