@@ -1,7 +1,7 @@
 ## Interface: 90001
 ## Title: |cffFF8C00TKUI|r an ElvUI Edit
 ## Author: Teekey
-## Version: 1.0
+## Version: TKUI.Beta.9.0.2.4
 ## Notes: |cffFF8C00TKUI|r an ElvUI Edit
 ## RequiredDeps: ElvUI
 ## OptionalDeps: Masque, LibStub, CallbackHandler-1.0, LibSharedMedia-3.0

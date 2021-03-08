@@ -81,7 +81,7 @@ local function Enable(self)
 		self:RegisterEvent('GROUP_ROSTER_UPDATE', Path, true)
 
 		if(element:IsObjectType('Texture') and not element:GetTexture()) then
-			element:SetTexture([[Interface\Addons\TKUI\Textures\Leader]])
+			element:SetTexture([[Interface\GroupFrame\UI-Group-LeaderIcon]])
 		end
 
 		return true

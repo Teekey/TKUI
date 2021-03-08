@@ -153,8 +153,8 @@ MSQ:AddSkin('TKUI', {
 ,
 	},
 	AutoCastShine = {
-		Width = 34,
-		Height = 34,
+		Width = 44,
+		Height = 30,
 		OffsetX = 1,
 		OffsetY = -1,
 	},

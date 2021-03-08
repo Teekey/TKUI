@@ -56,7 +56,7 @@ local function Update(self, event)
 			self:SetAlpha(element.insideAlpha)
 		end
 	else
-		self:SetAlpha(element.outsideAlpha)
+		self:SetAlpha(element.insideAlpha)
 	end
 
 	--[[ Callback: Range:PostUpdate(object, inRange, checkedRange, isConnected)
