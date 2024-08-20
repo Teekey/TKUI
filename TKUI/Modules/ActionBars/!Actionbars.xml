@@ -1,0 +1,20 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="Core.lua"/>
+	<Script file="Bindings.lua"/>
+	<Script file="Bar1.lua"/>
+	<Script file="Bar2.lua"/>
+	<Script file="Bar3.lua"/>
+	<Script file="Bar4.lua"/>
+	<Script file="Bar5.lua"/>
+	<Script file="Bar6.lua"/>
+	<Script file="Bar7.lua"/>
+	<Script file="Bar8.lua"/>
+	<Script file="BarPet.lua"/>
+	<Script file="BarStance.lua"/>
+	<Script file="Toggle.lua"/>
+	<Script file="Style.lua"/>
+	<Script file="Status.lua"/>
+	<Script file="VehicleExit.lua"/>
+	<Script file="Cooldowns.lua"/>
+	<Script file="ExtraBar.lua"/>
+</Ui>

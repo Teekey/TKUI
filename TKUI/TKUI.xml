@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="Core\Init.lua"/>
+	<Script file="Core\Constants.lua"/>
+	<Include file="Locales\!Locales.xml"/>
+	<Include file="Config\!Config.xml"/>
+	<Script file="Core\GUI.lua"/>
+	<Script file="Core\PixelPerfect.lua"/>
+	<Include file="Libs\!Libs.xml"/>
+	<Script file="Config\Colors.lua"/>
+	<Script file="Config\Tags.lua"/>
+	<Include file="Core\!Core.xml"/>
+	<Include file="Config\Filters\!Filters.xml"/>
+	<Include file="Modules\!Modules.xml"/>
+	<Script file="Core\Movers.lua"/>
+</Ui>

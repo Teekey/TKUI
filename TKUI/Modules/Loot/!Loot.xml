@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="AutoConfirm.lua"/>
+	<Script file="AutoGreed.lua"/>
+	<Script file="FasterLoot.lua"/>
+	<Script file="GroupLoot.lua"/>
+	<Script file="Loot.lua"/>
+	<Script file="LootFilter.lua"/>
+	<!-- <Script file="MasterLoot.lua"/> -->
+</Ui>

@@ -1,18 +1,14 @@
-## Interface: 90001
-## Title: |cffFF8C00TKUI|r an ElvUI Edit
+## Interface: 110000
+## Title: TKUI
+## Notes: A total UI overhaul for World of Warcraft, based on TKUI
 ## Author: Teekey
-## Version: TKUI.Beta.9.0.2.4
-## Notes: |cffFF8C00TKUI|r an ElvUI Edit
-## RequiredDeps: ElvUI
-## OptionalDeps: Masque, LibStub, CallbackHandler-1.0, LibSharedMedia-3.0
-## X-oUF: TKUI
+## Version: 1.0
+## OptionalDeps: BigWigs, Details, BetterBags
+## SavedVariables: TKUISettings, TKUIStats, TKUIBindings, TKUICurrency, TKUIPositions, TKUILootFilter
+## SavedVariablesPerCharacter: TKUISettingsPerChar, TKUIChatHistory, TKUIPositionsPerChar
+## IconTexture: Interface\AddOns\TKUI\Media\Textures\Logo.tga
 
-Libs\Lib.xml
-Embeds\oUF\oUF.xml
+## X-Credits: Wetxius, Shestak, AcidWeb, Aezay, Affli, Ailae, Allez, ALZA, Ammo, Astromech, Beoko, Bitbyte, Blamdarot, Bozo, Caellian, Califpornia, Camealion, Chiril, CrusaderHeimdall, Cybey, Dawn, Dencer, Don Kaban, Dridzt, Duffed, Durcyn, Eclipse, Egingell, Elv22, Evilpaul, Evl, Favorit, Fernir, Foof, Freebaser, g0st, Gethe, Gorlasch, Gsuz, Haleth, Haste, Hoochie, Hungtar, Hydra, HyPeRnIcS, Ildyria, iSpawnAtHome, Jaslm, Kanegasi, Karl_w_w, Karudon, Katae, Kellett, Kemayo, Killakhan, Kraftman, Leatrix, m2jest1c, Magdain, Monolit, MrRuben5, Nathanyel, Nefarion, Nightcracker, Nils Ruesch, p3lim, Partha, Phanx, Renstrom, RustamIrzaev, Safturento, Sanex, Sara.Festung, SDPhantom, Semlar, Sildor, Silverwind, SinaC, siweia, Slakah, Soeters, Starlon, Suicidal Katt, Syzgyn, Tekkub, Telroth, Thalyra, Thizzelle, Tia Lynn, Tohveli, Tukz, Tuller, Urtgard, Veev, Villiv, Wetxius, Woffle of Dark Iron, Wrug, Xuerian, Yleaf, Zork
+## X-oUF: oUF_TKUI
 
-Media\Media.lua
-Tags\Tags.lua
-Main.lua
-Health.lua
-Skin.lua
-Installer.lua
+TKUI.xml

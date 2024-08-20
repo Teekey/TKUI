@@ -1,0 +1,5 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="Functions.lua"/>
+    <Script file="Elements.lua"/>
+    <Script file="Nameplates.lua"/>
+</Ui>

@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="AdvCombatLog.lua"/>
+    <Script file="CombatCrosshair.lua"/>
+    <Script file="CombatCursor.lua"/>
+    <Script file="SCT.lua"/>
+    <Script file="BWTimeline.lua"/>
+    <Script file="MagePortals.lua"/>
+    <Script file="Misc.lua"/>
+    <Script file="PvPQueueTimer.lua"/>
+    <Script file="RaidUtility.lua"/>
+    <Script file="SlotItemLevel.lua"/>
+    <!-- <Script file="Databar.lua"/> -->
+</Ui>

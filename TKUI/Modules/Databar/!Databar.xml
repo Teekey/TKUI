@@ -1,0 +1,17 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="Init.lua"/>
+    <Script file="MicroMenu.lua"/>
+    <Script file="System.lua"/>
+    <Script file="Volume.lua"/>
+    <Script file="Hearthstone.lua"/>
+    <Script file="Bag.lua"/>
+    <Script file="Gold.lua"/>
+    <Script file="Professions.lua"/>
+    <Script file="Experience.lua"/>
+    <Script file="Durability.lua"/>
+    <Script file="ItemLevel.lua"/>
+    <Script file="Spec.lua"/>
+    <Script file="LootSpec.lua"/>'
+    <Script file="Clock.lua"/>
+    <Script file="Databar.lua"/>
+</Ui>

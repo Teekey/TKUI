@@ -1,0 +1,16 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="ArenaControl.lua"/>
+	<Script file="AutoButton.lua"/>
+	<Script file="BadBuffs.lua"/>
+	<Script file="ChannelingTicks.lua"/>
+	<Script file="ChatSpam.lua"/>
+	<Script file="Cooldowns.lua"/>
+	<Script file="Diminishing.lua"/>
+	<Script file="Errors.lua"/>
+	<Script file="FilgerSpells.lua"/>
+	<Script file="Nameplates.lua"/>
+	<Script file="OpenItems.lua"/>
+	<Script file="AuraWatch.lua"/>
+	<Script file="Reminders.lua"/>
+	<Script file="LootFilter.lua"/>
+</Ui>

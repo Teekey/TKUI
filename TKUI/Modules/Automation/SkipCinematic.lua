@@ -1,0 +1,61 @@
+----------------------------------------------------------------------------------------
+--	SkipCinematic for TKUI
+--	This script automatically skips cinematics and movies that have been viewed before.
+--	It allows users to watch new cinematics while skipping previously seen ones.
+--	Based on CinematicSkip by Pigmonkey
+----------------------------------------------------------------------------------------
+
+-- local T, C, L = unpack(TKUI)
+-- if C.automation.skip_cinematic ~= true then return end
+
+-- ----------------------------------------------------------------------------------------
+-- --	Initialization
+-- ----------------------------------------------------------------------------------------
+-- -- Initialize or load saved variable for viewed cinematics
+-- T.ViewedCinematics = T.ViewedCinematics or {}
+
+-- ----------------------------------------------------------------------------------------
+-- --	Utility Functions
+-- ----------------------------------------------------------------------------------------
+-- -- Function to check if a cinematic has been viewed
+-- local function HasSeenCinematic()
+--     local index = GetCinematicIndex()
+--     return T.ViewedCinematics[index]
+-- end
+
+-- -- Function to mark a cinematic as viewed
+-- local function MarkCinematicAsViewed()
+--     local index = GetCinematicIndex()
+--     T.ViewedCinematics[index] = true
+-- end
+
+-- ----------------------------------------------------------------------------------------
+-- --	Event Handling
+-- ----------------------------------------------------------------------------------------
+-- -- Cancel cinematics after they start if they've been seen before
+-- local frame = CreateFrame("Frame")
+-- frame:RegisterEvent("CINEMATIC_START")
+-- frame:RegisterEvent("CINEMATIC_STOP")
+-- frame:SetScript("OnEvent", function(_, event)
+--     if event == "CINEMATIC_START" then
+--         if HasSeenCinematic() and not IsControlKeyDown() then
+--             CinematicFrame_CancelCinematic()
+--         end
+--     elseif event == "CINEMATIC_STOP" then
+--         MarkCinematicAsViewed()
+--     end
+-- end)
+
+-- ----------------------------------------------------------------------------------------
+-- --	Movie Handling
+-- ----------------------------------------------------------------------------------------
+-- -- Hook movies and stop them before they get called if they've been seen before
+-- local PlayMovie_hook = MovieFrame_PlayMovie
+-- MovieFrame_PlayMovie = function(...)
+--     if HasSeenCinematic() and not IsControlKeyDown() then
+--         GameMovieFinished()
+--     else
+--         PlayMovie_hook(...)
+--         MarkCinematicAsViewed()
+--     end
+-- end

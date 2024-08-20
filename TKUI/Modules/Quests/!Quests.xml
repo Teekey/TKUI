@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="AutoAccept.lua"/>
+    <Script file="AutoZone.lua"/>
+    <Script file="AutoButton.lua"/>
+    <Script file="ObjectiveTracker.lua"/>
+    <Script file="WowheadLink.lua"/>
+</Ui>

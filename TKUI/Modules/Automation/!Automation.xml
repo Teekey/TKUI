@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="AutoItemBar.lua"/>
+    <Script file="AutoInvite.lua"/>
+    <Script file="AutoRelease.lua"/>
+    <Script file="AutoRepair.lua"/>
+    <Script file="AutoSellJunk.lua"/>
+    <Script file="CancelBadBuffs.lua"/>
+    <Script file="LoggingCombat.lua"/>
+    <Script file="Resurrection.lua"/>
+    <Script file="SetRole.lua"/>
+    <Script file="SkipCinematic.lua"/>
+</Ui>

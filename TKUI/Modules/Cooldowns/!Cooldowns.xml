@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="DiminishingCD.lua"/>
+    <Script file="EnemyCD.lua"/>
+    <Script file="PulseCD.lua"/>
+    <Script file="RaidCD.lua"/>
+</Ui>

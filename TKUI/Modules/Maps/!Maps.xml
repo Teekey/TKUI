@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="BattlefieldMap.lua"/>
+    <Script file="ButtonCollect.lua"/>
+    <Script file="FogOfWar.lua"/>
+    <Script file="MiniMap.lua"/>
+    <Script file="MiniMapButtons.lua"/>
+    <Script file="WorldMap.lua"/>
+</Ui>
