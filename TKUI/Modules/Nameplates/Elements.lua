@@ -151,24 +151,27 @@ function NP.CreateCastBar(self)
 
     -- Icon (simplified positioning)
     local iconSize = FRAME_HEIGHT
-    castbar.Icon = castbar:CreateTexture(nil, "ARTWORK")
+    castbar.Button = CreateFrame("Frame", nil, castbar)
+    castbar.Icon = castbar.Button:CreateTexture(nil, "ARTWORK")
     castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     castbar.Icon:SetSize(iconSize, iconSize)
     castbar.Icon:SetPoint("TOPRIGHT", self.Health, "TOPLEFT", -9 * T.noscalemult, 0)
 
     -- Cooldown frame
-    castbar.IconCooldown = CreateFrame("Cooldown", nil, castbar, "CooldownFrameTemplate")
-    castbar.IconCooldown:SetAllPoints(castbar.Icon)
-    castbar.IconCooldown:SetReverse(true)
-    castbar.IconCooldown:SetDrawEdge(false)
-    castbar.IconCooldown:SetSwipeColor(0, 0, 0, 0.8)
-    castbar.IconCooldown:SetFrameLevel(castbar:GetFrameLevel())
+    castbar.IconCooldown = CreateFrame("Cooldown", nil, castbar.Button, "CooldownFrameTemplate")  -- Ensure it's parented to Button
+    castbar.IconCooldown:SetPoint("TOPLEFT", castbar.Icon, "TOPLEFT", -2, 2)
+    castbar.IconCooldown:SetPoint("BOTTOMRIGHT", castbar.Icon, "BOTTOMRIGHT", 2, -2)
+    castbar.IconCooldown:SetReverse(false)
+    castbar.IconCooldown:SetDrawEdge(false)  -- Ensure edges are drawn
+    castbar.IconCooldown:SetSwipeColor(0, 0, 0, 0.9)  -- Ensure alpha is > 0
+    castbar.IconCooldown:SetFrameLevel(castbar.Button:GetFrameLevel())  -- Set to the same level as the button
 
-    castbar.Icon:SetDrawLayer("ARTWORK", 1)
-    NP.CreateBorder(castbar, castbar.Icon)
+    -- Set the icon draw layer higher than the cooldown
+    castbar.Icon:SetDrawLayer("ARTWORK", 2)  -- Set icon draw layer higher than cooldown
+    NP.CreateBorder(castbar.Button, castbar.Icon)  -- Create border for the icon
 
-    -- Time Text
-    castbar.Time = castbar:CreateFontString(nil, "OVERLAY")
+    -- Time Text (positioned above the icon)
+    castbar.Time = castbar.Button:CreateFontString(nil, "OVERLAY")
     castbar.Time:SetPoint("CENTER", castbar.Icon, "CENTER", 0, 0)
     castbar.Time:SetJustifyH("CENTER")
     castbar.Time:SetFont(C.font.nameplates_spelltime_font, C.font.nameplates_spelltime_size * T.noscalemult,

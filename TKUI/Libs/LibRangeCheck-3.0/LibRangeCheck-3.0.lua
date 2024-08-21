@@ -589,7 +589,12 @@ local checkers_Item = setmetatable({}, {
       if not skipInCombatCheck and InCombatLockdownRestriction(unit) then
         return nil
       else
-        return C_Item.IsItemInRange(item, unit) or nil
+        -- Check if C_Item is available before using it
+        if C_Item and C_Item.IsItemInRange then
+          return C_Item.IsItemInRange(item, unit) or nil
+        else
+          return nil -- or handle the case where C_Item is not available
+        end
       end
     end
     t[item] = func

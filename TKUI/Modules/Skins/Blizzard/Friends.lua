@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	Friends skin
 ----------------------------------------------------------------------------------------
@@ -137,11 +136,19 @@ local function LoadSkin()
 	RecruitAFriendRewardsFrame:SetTemplate("Transparent")
 	T.SkinCloseButton(RecruitAFriendRewardsFrame.CloseButton)
 
-	--FIXME for object in pairs(RecruitAFriendRewardsFrame.rewardPool.activeObjects) do
-		-- object.Button.Icon:SkinIcon()
-		-- object.Button.IconBorder:SetAlpha(0)
-		-- object.Button:StyleButton(true, 0)
-	-- end
+	RecruitAFriendRewardsFrame:HookScript("OnShow", function(self)
+		for i = 1, self:GetNumChildren() do
+			local child = select(i, self:GetChildren())
+			local button = child and child.Button
+			if button and not button.styled then
+				button.IconSkinIcon()
+				button.IconBorder:SetAlpha(0)
+				button:StyleButton(true, 0)
+
+				button.styled = true
+			end
+		end
+	end)
 
 	RecruitAFriendFrame.RewardClaiming.NextRewardButton.Icon:SkinIcon()
 	RecruitAFriendFrame.RewardClaiming.NextRewardButton.CircleMask:Hide()
@@ -197,7 +204,6 @@ local function LoadSkin()
 	end
 
 	FriendsFrame:SetTemplate("Transparent")
-	--FIXME FriendsFrameStatusDropDown:SetPoint("TOPLEFT", 1, -27)
 
 	local function ReskinFriendButton(button)
 		if button.styled then return end
@@ -247,9 +253,13 @@ local function LoadSkin()
 	end)
 
 	T.SkinCloseButton(FriendsFrameCloseButton)
-	--FIXME T.SkinDropDownBox(WhoFrameDropDown, 150)
-	-- T.SkinDropDownBox(FriendsFrameStatusDropDown, 70)
-	-- T.SkinDropDownBox(FriendsFriendsFrameDropDown)
+	T.SkinDropDownBox(WhoFrameDropdown, 150)
+	T.SkinDropDownBox(FriendsFrameStatusDropdown, 70)
+	T.SkinDropDownBox(FriendsFriendsFrameDropdown)
+
+	FriendsFrameStatusDropdown:ClearAllPoints()
+	FriendsFrameStatusDropdown:SetPoint("TOPLEFT", FriendsFrame, "TOPLEFT", 22, -27)
+	FriendsFrameStatusDropdown.Text:SetFont(C.media.normal_font, 12, "")
 
 	-- Bottom Tabs
 	for i = 1, 4 do

@@ -1,12 +1,16 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	Islands skin
 ----------------------------------------------------------------------------------------
 local LoadTootlipSkin = CreateFrame("Frame")
 LoadTootlipSkin:RegisterEvent("ADDON_LOADED")
 LoadTootlipSkin:SetScript("OnEvent", function(self, _, addon)
+	if C_AddOns.IsAddOnLoaded("Skinner") or C_AddOns.IsAddOnLoaded("Aurora") or not C.tooltip.enable then
+		self:UnregisterEvent("ADDON_LOADED")
+		return
+	end
+
 	if addon == "Blizzard_IslandsQueueUI" then
 		local tt = IslandsQueueFrame.WeeklyQuest.QuestReward.Tooltip
 		tt:SetTemplate("Transparent")
@@ -14,7 +18,6 @@ LoadTootlipSkin:SetScript("OnEvent", function(self, _, addon)
 		tt.ItemTooltip.IconBorder:SetAlpha(0)
 	end
 end)
-
 
 
 local function LoadSkin()

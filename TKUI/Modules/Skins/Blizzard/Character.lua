@@ -359,24 +359,29 @@ local function LoadSkin()
 		end
 	end)
 
-	--FIXME ReputationDetailFrame:StripTextures()
-	-- ReputationDetailFrame:SetTemplate("Transparent")
-	-- ReputationDetailFrame:SetPoint("TOPLEFT", ReputationFrame, "TOPRIGHT", 3, 0)
-	-- T.SkinCloseButton(ReputationDetailCloseButton)
-	-- T.SkinCheckBox(ReputationDetailMainScreenCheckBox)
-	-- T.SkinCheckBox(ReputationDetailInactiveCheckBox)
-	-- T.SkinCheckBox(ReputationDetailAtWarCheckBox)
-	-- ReputationDetailViewRenownButton:SkinButton()
+	ReputationFrame.ReputationDetailFrame:StripTextures()
+	ReputationFrame.ReputationDetailFrame:SetTemplate("Transparent")
+	ReputationFrame.ReputationDetailFrame:SetPoint("TOPLEFT", ReputationFrame, "TOPRIGHT", 3, 0)
+	T.SkinCloseButton(ReputationFrame.ReputationDetailFrame.CloseButton)
+	T.SkinCheckBox(ReputationFrame.ReputationDetailFrame.WatchFactionCheckbox)
+	T.SkinCheckBox(ReputationFrame.ReputationDetailFrame.MakeInactiveCheckbox)
+	T.SkinCheckBox(ReputationFrame.ReputationDetailFrame.AtWarCheckbox)
+	ReputationFrame.ReputationDetailFrame.ViewRenownButton:SkinButton()
+
+	T.SkinDropDownBox(ReputationFrame.filterDropdown)
 
 	-- Currency
 	TokenFramePopup:StripTextures()
 	TokenFramePopup:SetTemplate("Transparent")
 	TokenFramePopup:SetPoint("TOPLEFT", TokenFrame, "TOPRIGHT", 3, 0)
-	if TokenFramePopup.CloseButton then
-		T.SkinCloseButton(TokenFramePopup.CloseButton)
+
+	local TokenPopupClose = _G.TokenFramePopup['$parent.CloseButton']
+	if TokenPopupClose then
+		T.SkinCloseButton(TokenPopupClose)
 	end
-	-- T.SkinCheckBox(TokenFramePopup.InactiveCheckBox)
-	-- T.SkinCheckBox(TokenFramePopup.BackpackCheckBox)
+
+	T.SkinCheckBox(TokenFramePopup.InactiveCheckbox)
+	T.SkinCheckBox(TokenFramePopup.BackpackCheckbox)
 
 	hooksecurefunc(_G.TokenFrame.ScrollBox, "Update", function(frame)
 		for _, child in next, { frame.ScrollTarget:GetChildren() } do

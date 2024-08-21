@@ -6,6 +6,11 @@ local T, C, L = unpack(TKUI)
 local LoadTootlipSkin = CreateFrame("Frame")
 LoadTootlipSkin:RegisterEvent("ADDON_LOADED")
 LoadTootlipSkin:SetScript("OnEvent", function(self, _, addon)
+	if C_AddOns.IsAddOnLoaded("Skinner") or C_AddOns.IsAddOnLoaded("Aurora") or not C.tooltip.enable then
+		self:UnregisterEvent("ADDON_LOADED")
+		return
+	end
+
 	if addon == "Blizzard_Contribution" then
 		ContributionBuffTooltip:StripTextures()
 		ContributionBuffTooltip:SetTemplate("Transparent")
@@ -16,7 +21,6 @@ LoadTootlipSkin:SetScript("OnEvent", function(self, _, addon)
 		ContributionBuffTooltip.backdrop:SetPoint("BOTTOMRIGHT", ContributionBuffTooltip.Icon, "BOTTOMRIGHT", 2, -2)
 	end
 end)
-
 
 local function LoadSkin()
 	T.SkinCloseButton(ContributionCollectionFrame.CloseButton)

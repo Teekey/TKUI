@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	TrainerUI skin
 ----------------------------------------------------------------------------------------
@@ -35,9 +34,7 @@ local function LoadSkin()
 	ClassTrainerFrame.backdrop:SetPoint("TOPLEFT", ClassTrainerFrame, "TOPLEFT")
 	ClassTrainerFrame.backdrop:SetPoint("BOTTOMRIGHT", ClassTrainerFrame, "BOTTOMRIGHT")
 
-	T.SkinDropDownBox(ClassTrainerFrameFilterDropDown)
-	ClassTrainerFrameFilterDropDown:ClearAllPoints()
-	ClassTrainerFrameFilterDropDown:SetPoint("TOPRIGHT", ClassTrainerFrame.backdrop, "TOPRIGHT", 4, -30)
+	T.SkinFilter(ClassTrainerFrame.FilterDropdown, true)
 
 	T.SkinCloseButton(ClassTrainerFrameCloseButton, ClassTrainerFrame)
 
@@ -50,13 +47,11 @@ local function LoadSkin()
 	ClassTrainerStatusBar:CreateBackdrop("Overlay")
 	ClassTrainerStatusBar:SetHeight(17)
 	ClassTrainerStatusBar:ClearAllPoints()
-	ClassTrainerStatusBar:SetPoint("RIGHT", ClassTrainerFrameFilterDropDown, "LEFT", 10, 3)
+	ClassTrainerStatusBar:SetPoint("RIGHT", ClassTrainerFrame.FilterDropdown, "LEFT", -14, -1)
 	ClassTrainerStatusBar.rankText:ClearAllPoints()
 	ClassTrainerStatusBar.rankText:SetPoint("CENTER", ClassTrainerStatusBar, "CENTER")
 
 	local stepButton = ClassTrainerFrameSkillStepButton
-	stepButton:ClearAllPoints()
-	stepButton:SetPoint("TOPRIGHT", ClassTrainerFrameFilterDropDown, "BOTTOMRIGHT", -16, 0)
 	stepButton:CreateBackdrop("Overlay")
 	stepButton.backdrop:SetPoint("BOTTOMRIGHT", 2, -3)
 	stepButton:StyleButton(nil, nil, true)

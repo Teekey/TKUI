@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	Loot skin
 ----------------------------------------------------------------------------------------
@@ -12,7 +11,7 @@ local function LoadSkin()
 
 	T.SkinCloseButton(frame.ClosePanelButton)
 	T.SkinScrollBar(frame.ScrollBar)
-	--FIXME T.SkinDropDownBox(frame.EncounterDropDown)
+	T.SkinDropDownBox(frame.EncounterDropdown)
 
 	frame.Timer:StripTextures()
 	frame.Timer:CreateBackdrop("Default")
@@ -83,34 +82,6 @@ local function LoadSkin()
 		end
 	end)
 
-	-- FIXME local function UpdateLoots(self)
-		-- local numItems = C_LootHistory.GetNumItems()
-		-- for i = 1, numItems do
-			-- local frame = self.itemFrames[i]
-
-			-- if not frame.isSkinned then
-				-- local Icon = frame.Icon:GetTexture()
-
-				-- frame:StripTextures()
-
-				-- frame:CreateBackdrop("Default")
-				-- frame.backdrop:SetPoint("TOPLEFT", frame.Icon, -2, 2)
-				-- frame.backdrop:SetPoint("BOTTOMRIGHT", frame.Icon, 2, -2)
-
-				-- frame.Icon:SetTexture(Icon)
-				-- frame.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-				-- frame.Icon:SetParent(frame.backdrop)
-
-				-- frame.isSkinned = true
-			-- end
-		-- end
-	-- end
-
-	-- if not T.newPatch then
-		-- hooksecurefunc("GroupLootHistoryFrame_FullUpdate", UpdateLoots)
-		-- frame:HookScript("OnShow", UpdateLoots)
-	-- end
-
 	-- Master Looter frame
 	MasterLooterFrame:StripTextures()
 	MasterLooterFrame:SetTemplate("Transparent")
@@ -146,6 +117,46 @@ local function LoadSkin()
 					child.isSkinned = true
 				end
 			end
+		end
+	end)
+
+	LootFrame:StripTextures(true)
+	LootFrame:SetTemplate("Transparent")
+	T.SkinCloseButton(LootFrame.ClosePanelButton)
+
+	hooksecurefunc(LootFrameElementMixin, "Init", function(button)
+		local item = button.Item
+		if item and not item.styled then
+			item:StyleButton()
+			item:SetNormalTexture(0)
+			item:SetTemplate("Default")
+
+			item.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+			item.icon:ClearAllPoints()
+			item.icon:SetPoint("TOPLEFT", 2, -2)
+			item.icon:SetPoint("BOTTOMRIGHT", -2, 2)
+
+			button:CreateBackdrop("Overlay")
+			button.backdrop:SetPoint("TOPLEFT", 0, 0)
+			button.backdrop:SetPoint("BOTTOMRIGHT", 0, 0)
+
+			button.HighlightNameFrame:SetAlpha(0)
+			button.PushedNameFrame:SetAlpha(0)
+			item.IconBorder:SetAlpha(0)
+			button.NameFrame:Hide()
+
+			item.styled = true
+		end
+
+		button.IconQuestTexture:SetAlpha(0)
+		button.BorderFrame:SetAlpha(0)
+		if button.QualityStripe then
+			button.QualityStripe:SetAlpha(0)
+		end
+		if button.IconQuestTexture:IsShown() then
+			item:SetBackdropBorderColor(1, 1, 0)
+		else
+			item:SetBackdropBorderColor(unpack(C.media.border_color))
 		end
 	end)
 end

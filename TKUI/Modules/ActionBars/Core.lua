@@ -23,8 +23,8 @@ frame:SetScript("OnEvent", function()
 
 	if not C.actionbar.micromenu then
 		MicroMenu:Hide()
-		--FIXME TalentMicroButton:ClearAllPoints()
-		-- TalentMicroButton:SetPoint("TOP", UIParent, "TOP", 0, 100) -- hide missing talent alert
+		PlayerSpellsMicroButton:ClearAllPoints()
+		PlayerSpellsMicroButton:SetPoint("TOP", UIParent, "TOP", 0, 100) -- hide missing talent alert
 	end
 
 	MainMenuBar:SetMovable(true)
@@ -428,15 +428,13 @@ T.ShiftBarUpdate = function()
 end
 
 T.PetBarUpdate = function()
-	local petActionButton, petActionIcon, petAutoCastableTexture, petAutoCastShine
+	local petActionButton, petActionIcon, petAutoCastOverlay
 	for i = 1, NUM_PET_ACTION_SLOTS, 1 do
-		local buttonName = "PetActionButton" .. i
+		local buttonName = "PetActionButton"..i
 		petActionButton = _G[buttonName]
-		petActionIcon = _G[buttonName .. "Icon"]
-		petAutoCastableTexture = _G["PetActionButton" .. i].AutoCastable or _G[buttonName .. "AutoCastable"]
-		petAutoCastShine = _G[buttonName .. "Shine"]
+		petActionIcon = _G[buttonName.."Icon"]
+		petAutoCastOverlay = _G["PetActionButton"..i].AutoCastOverlay
 		local name, texture, isToken, isActive, autoCastAllowed, autoCastEnabled = GetPetActionInfo(i)
-		petActionButton:SetSize(C.actionbar.button_size, C.actionbar.button_size) -- Set width and height to the same value for square buttons
 
 		if not isToken then
 			petActionIcon:SetTexture(texture)
@@ -462,17 +460,10 @@ T.PetBarUpdate = function()
 			end
 		end
 
-		--FIXME if autoCastAllowed then
-		-- petAutoCastableTexture:Show()
-		-- else
-		-- petAutoCastableTexture:Hide()
-		-- end
-
-		-- if autoCastEnabled then
-		-- AutoCastShine_AutoCastStart(petAutoCastShine)
-		-- else
-		-- AutoCastShine_AutoCastStop(petAutoCastShine)
-		-- end
+		if petAutoCastOverlay then
+			petAutoCastOverlay:SetShown(autoCastAllowed)
+			petAutoCastOverlay:ShowAutoCastEnabled(autoCastEnabled)
+		end
 
 		if name then
 			if not C.actionbar.show_grid then

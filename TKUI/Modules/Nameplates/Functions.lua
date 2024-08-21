@@ -372,17 +372,27 @@ function NP.castColor(self)
     local color, borderColor
 
     if self.notInterruptible then
-        color = { 0.78, 0.25, 0.25 }
-        borderColor = color
+        color = { 0.78, 0.25, 0.25 }  -- Color for uninterruptible spells
+        borderColor = color  -- Same color for uninterruptible spells
     else
-        color = { 1, 0.8, 0 }
+        color = { 1, 0.8, 0 }  -- Color for interruptible spells
+        borderColor = color  -- Set border color to the same as the spell color
+
         if C.nameplate.kick_color and kickID ~= 0 then
             local start = GetSpellCooldown(kickID)
             if start ~= 0 then
-                color = { 1, 0.5, 0 }
+                color = { 1, 0.5, 0 }  -- Change color if the kick is on cooldown
             end
         end
-        borderColor = C.media.border_color
+
+        -- Set border color based on spell ID if cast color is enabled
+        if C.nameplate.cast_color and self.spellID then
+            if T.InterruptCast[self.spellID] then
+                borderColor = { 1, 0.8, 0 }  -- Yellow for interruptible spells
+            elseif T.ImportantCast[self.spellID] then
+                borderColor = { 1, 0, 0 }  -- Red for important casts
+            end
+        end
     end
 
     self:SetStatusBarColor(unpack(color))
@@ -392,14 +402,6 @@ function NP.castColor(self)
 
     if self.Icon then
         SetColorBorder(self.Icon:GetParent(), unpack(color))
-    end
-
-    if C.nameplate.cast_color and self.spellID then
-        if T.InterruptCast[self.spellID] then
-            borderColor = { 1, 0.8, 0 }
-        elseif T.ImportantCast[self.spellID] then
-            borderColor = { 1, 0, 0 }
-        end
     end
 
     SetColorBorder(self, unpack(borderColor))

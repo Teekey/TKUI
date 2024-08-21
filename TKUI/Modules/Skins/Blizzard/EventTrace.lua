@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	EventTrace skin
 ----------------------------------------------------------------------------------------
@@ -11,7 +10,7 @@ local function LoadSkin()
 	frame:StripTextures()
 	frame:SetTemplate("Transparent")
 
-	EventTrace.SubtitleBar.OptionsDropDown:SkinButton()
+	T.SkinFilter(EventTrace.SubtitleBar.OptionsDropdown, true)
 	T.SkinEditBox(EventTrace.Log.Bar.SearchBox, nil, 16)
 
 	if EventTrace.Log.Events.ScrollBar.Background then

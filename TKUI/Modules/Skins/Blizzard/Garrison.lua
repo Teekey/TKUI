@@ -6,6 +6,11 @@ local T, C, L = unpack(TKUI)
 local LoadTootlipSkin = CreateFrame("Frame")
 LoadTootlipSkin:RegisterEvent("ADDON_LOADED")
 LoadTootlipSkin:SetScript("OnEvent", function(self, _, addon)
+	if C_AddOns.IsAddOnLoaded("Skinner") or C_AddOns.IsAddOnLoaded("Aurora") or not C.tooltip.enable then
+		self:UnregisterEvent("ADDON_LOADED")
+		return
+	end
+
 	if addon == "TKUI" then
 		local Tooltips = {
 			FloatingGarrisonFollowerTooltip,
@@ -52,8 +57,6 @@ LoadTootlipSkin:SetScript("OnEvent", function(self, _, addon)
 	end
 end)
 
-
-
 local function LoadSkin()
 	-- Garrison Building frame
 	GarrisonBuildingFrame:StripTextures()
@@ -61,7 +64,7 @@ local function LoadSkin()
 	T.SkinCloseButton(GarrisonBuildingFrame.CloseButton)
 	GarrisonBuildingFrame.GarrCorners:Hide()
 
-	for _, button in pairs({ GarrisonBuildingFrame.TownHallBox.UpgradeButton, GarrisonBuildingFrame.InfoBox.UpgradeButton }) do
+	for _, button in pairs({GarrisonBuildingFrame.TownHallBox.UpgradeButton, GarrisonBuildingFrame.InfoBox.UpgradeButton}) do
 		button:StripTextures(true)
 		button:SkinButton()
 	end
@@ -148,7 +151,7 @@ local function LoadSkin()
 	GarrisonMissionFrame.FollowerTab:StripTextures()
 	GarrisonMissionFrame.FollowerTab:SetTemplate("Overlay")
 
-	for _, item in pairs({ GarrisonMissionFrame.FollowerTab.ItemWeapon, GarrisonMissionFrame.FollowerTab.ItemArmor }) do
+	for _, item in pairs({GarrisonMissionFrame.FollowerTab.ItemWeapon, GarrisonMissionFrame.FollowerTab.ItemArmor}) do
 		item.Border:Hide()
 		item.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 		item:CreateBackdrop("Default")
@@ -239,8 +242,6 @@ local function LoadSkin()
 		if counters then
 			for _, counter in next, counters do
 				if counter and not counter.styled then
-					-- counter:SetTemplate("Default") -- FIXME looks ugly, not pixelperfect
-
 					if counter.Border then
 						counter.Border:SetTexture("")
 					end
@@ -350,10 +351,10 @@ local function LoadSkin()
 	GarrisonLandingPageTab1:SetPoint("TOPLEFT", GarrisonLandingPage, "BOTTOMLEFT", 70, -2)
 
 	for i = 1, 3 do
-		T.SkinTab(_G["GarrisonLandingPageTab" .. i])
-		_G["GarrisonLandingPageTab" .. i]:SetHeight(32)
-		_G["GarrisonLandingPageTab" .. i].Text:ClearAllPoints()
-		_G["GarrisonLandingPageTab" .. i].Text:SetPoint("CENTER")
+		T.SkinTab(_G["GarrisonLandingPageTab"..i])
+		_G["GarrisonLandingPageTab"..i]:SetHeight(32)
+		_G["GarrisonLandingPageTab"..i].Text:ClearAllPoints()
+		_G["GarrisonLandingPageTab"..i].Text:SetPoint("CENTER")
 	end
 
 	T.SkinScrollBar(GarrisonLandingPageReportList.ScrollBar)
@@ -381,7 +382,7 @@ local function LoadSkin()
 	GarrisonLandingPage.Report.Available:ClearAllPoints()
 	GarrisonLandingPage.Report.Available:SetPoint("LEFT", GarrisonLandingPage.Report.InProgress, "RIGHT", 4, 0)
 
-	for _, tab in pairs({ GarrisonLandingPage.Report.InProgress, GarrisonLandingPage.Report.Available }) do
+	for _, tab in pairs({GarrisonLandingPage.Report.InProgress, GarrisonLandingPage.Report.Available}) do
 		tab:CreateBackdrop("Overlay")
 		tab.backdrop:SetAllPoints()
 		tab:StyleButton()
@@ -630,7 +631,7 @@ local function LoadSkin()
 	T.SkinCloseButton(GarrisonRecruiterFrame.CloseButton)
 	GarrisonRecruiterFrame.UnavailableFrame:GetChildren():SkinButton()
 	GarrisonRecruiterFrame.Pick.ChooseRecruits:SkinButton()
-	T.SkinDropDownBox(GarrisonRecruiterFrame.Pick.ThreatDropDown)
+	T.SkinDropDownBox(GarrisonRecruiterFrame.Pick.ThreatDropdown)
 	T.SkinCheckBox(GarrisonRecruiterFrame.Pick.Radio1)
 	T.SkinCheckBox(GarrisonRecruiterFrame.Pick.Radio2)
 
@@ -649,13 +650,11 @@ local function LoadSkin()
 	GarrisonRecruitSelectFrame.FollowerSelection:StripTextures()
 	GarrisonRecruitSelectFrame.FollowerSelection:SetTemplate("Overlay")
 
-	GarrisonRecruitSelectFrame.FollowerList.ScrollBar:SetPoint("TOPLEFT",
-		GarrisonRecruitSelectFrame.FollowerList.ScrollBox, "TOPRIGHT", -6, 3)
-	GarrisonRecruitSelectFrame.FollowerList.ScrollBar:SetPoint("BOTTOMLEFT",
-		GarrisonRecruitSelectFrame.FollowerList.ScrollBox, "BOTTOMRIGHT", -3, -1)
+	GarrisonRecruitSelectFrame.FollowerList.ScrollBar:SetPoint("TOPLEFT", GarrisonRecruitSelectFrame.FollowerList.ScrollBox, "TOPRIGHT", -6, 3)
+	GarrisonRecruitSelectFrame.FollowerList.ScrollBar:SetPoint("BOTTOMLEFT", GarrisonRecruitSelectFrame.FollowerList.ScrollBox, "BOTTOMRIGHT", -3, -1)
 
 	for i = 1, 3 do
-		local recruit = GarrisonRecruitSelectFrame.FollowerSelection["Recruit" .. i]
+		local recruit = GarrisonRecruitSelectFrame.FollowerSelection["Recruit"..i]
 		recruit.HireRecruits:SkinButton()
 		HandleGarrisonPortrait(recruit.PortraitFrame)
 	end
@@ -716,7 +715,7 @@ local function LoadSkin()
 		if waiting then return end
 
 		for i = 1, 3 do
-			local frame = GarrisonRecruitSelectFrame.FollowerSelection["Recruit" .. i]
+			local frame = GarrisonRecruitSelectFrame.FollowerSelection["Recruit"..i]
 			if frame:IsShown() then
 				local traits = frame.Traits.Entries
 				if traits then
@@ -800,16 +799,14 @@ local function LoadSkin()
 			T.SkinTab(GarrisonShipyardFrameTab3)
 			local MissionPage = GarrisonMissionFrame.MissionTab.MissionPage
 			T.SkinCloseButton(MissionPage.MinimizeButton, nil, "-")
-			MissionPage.MinimizeButton:SetPoint("TOPRIGHT", GarrisonMissionFrame.MissionTab.MissionPage.CloseButton,
-				"TOPLEFT", -3, 0)
+			MissionPage.MinimizeButton:SetPoint("TOPRIGHT", GarrisonMissionFrame.MissionTab.MissionPage.CloseButton, "TOPLEFT", -3, 0)
 			MissionPage.MinimizeButton:SetFrameLevel(MissionPage:GetFrameLevel() + 2)
 			GarrisonMissionFrame.MissionTab.MissionPage.CloseButton:SetSize(18, 18)
 			GarrisonMissionFrame.MissionTab.MissionPage.CloseButton:SetPoint("TOPRIGHT", -4, -4)
 
 			local MissionPage = GarrisonShipyardFrame.MissionTab.MissionPage
 			T.SkinCloseButton(MissionPage.MinimizeButton, nil, "-")
-			MissionPage.MinimizeButton:SetPoint("TOPRIGHT", GarrisonShipyardFrame.MissionTab.MissionPage.CloseButton,
-				"TOPLEFT", -3, 0)
+			MissionPage.MinimizeButton:SetPoint("TOPRIGHT", GarrisonShipyardFrame.MissionTab.MissionPage.CloseButton, "TOPLEFT", -3, 0)
 			MissionPage.MinimizeButton:SetFrameLevel(MissionPage:GetFrameLevel() + 2)
 			GarrisonShipyardFrame.MissionTab.MissionPage.CloseButton:SetSize(18, 18)
 			GarrisonShipyardFrame.MissionTab.MissionPage.CloseButton:SetPoint("TOPRIGHT", -4, -4)
@@ -845,7 +842,7 @@ local function LoadSkin()
 	T.SkinCloseButton(OrderHallMissionFrame.CloseButton)
 
 	for i = 1, 3 do
-		T.SkinTab(_G["OrderHallMissionFrameTab" .. i])
+		T.SkinTab(_G["OrderHallMissionFrameTab"..i])
 	end
 
 	OrderHallMissionFrameMissions.CompleteDialog.BorderFrame:StripTextures()
@@ -874,10 +871,8 @@ local function LoadSkin()
 	OrderHallMissionFrameMissions.CombatAllyUI.InProgress.CombatAllySpell.iconTexture:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	OrderHallMissionFrameMissions.CombatAllyUI.InProgress.CombatAllySpell:CreateBackdrop("Default")
 	HandleGarrisonPortrait(OrderHallMissionFrameMissions.CombatAllyUI.InProgress.PortraitFrame)
-	OrderHallMissionFrameMissions.CombatAllyUI.InProgress.CombatAllySpell:SetPoint("BOTTOMLEFT",
-		OrderHallMissionFrameMissions.CombatAllyUI.InProgress.PortraitFrame.backdrop, "BOTTOMRIGHT", 12, -20)
-	hooksecurefunc(OrderHallMissionFrameMissions.CombatAllyUI.InProgress.PortraitFrame.PortraitRingQuality,
-		"SetVertexColor", function(self, r, g, b)
+	OrderHallMissionFrameMissions.CombatAllyUI.InProgress.CombatAllySpell:SetPoint("BOTTOMLEFT", OrderHallMissionFrameMissions.CombatAllyUI.InProgress.PortraitFrame.backdrop, "BOTTOMRIGHT", 12, -20)
+	hooksecurefunc(OrderHallMissionFrameMissions.CombatAllyUI.InProgress.PortraitFrame.PortraitRingQuality, "SetVertexColor", function(self, r, g, b)
 		if r ~= 1 and g ~= 1 and b ~= 1 then
 			OrderHallMissionFrameMissions.CombatAllyUI.InProgress.PortraitFrame.backdrop:SetBackdropBorderColor(r, g, b)
 		end
@@ -888,8 +883,7 @@ local function LoadSkin()
 	OrderHallMissionFrame.MissionTab:StripTextures()
 	OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage:StripTextures()
 	OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage:SetTemplate("Overlay")
-	OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage.CombatAllySpell:SetPoint("TOP",
-		OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage.CombatAllyDescriptionLabel, "BOTTOM", 0, -5)
+	OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage.CombatAllySpell:SetPoint("TOP", OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage.CombatAllyDescriptionLabel, "BOTTOM", 0, -5)
 	OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage.CombatAllySpell.iconTexture:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 	OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage.CombatAllySpell:CreateBackdrop("Default")
 	T.SkinCloseButton(OrderHallMissionFrame.MissionTab.ZoneSupportMissionPage.CloseButton)
@@ -961,7 +955,7 @@ local function LoadSkin()
 	BFAMissionFrame.MissionComplete.NextMissionButton:SkinButton()
 
 	for i = 1, 3 do
-		T.SkinTab(_G["BFAMissionFrameTab" .. i])
+		T.SkinTab(_G["BFAMissionFrameTab"..i])
 	end
 
 	T.SkinCloseButton(BFAMissionFrame.CloseButton)
@@ -1059,8 +1053,7 @@ local function LoadSkin()
 	CovenantMissionFrameMissions.ScrollBar.Track.Thumb:SetWidth(17)
 	CovenantMissionFrameMissions.ScrollBar.Forward:SetSize(17, 15)
 	CovenantMissionFrameMissions.ScrollBar:SetPoint("TOPLEFT", CovenantMissionFrameMissions.ScrollBox, "TOPRIGHT", 7, -11)
-	CovenantMissionFrameMissions.ScrollBar:SetPoint("BOTTOMLEFT", CovenantMissionFrameMissions.ScrollBox, "BOTTOMRIGHT",
-		7, 2)
+	CovenantMissionFrameMissions.ScrollBar:SetPoint("BOTTOMLEFT", CovenantMissionFrameMissions.ScrollBox, "BOTTOMRIGHT", 7, 2)
 
 	hooksecurefunc(CovenantMissionFrame.MissionTab.MissionList.ScrollBox, "Update", function(frame)
 		for i = 1, frame.ScrollTarget:GetNumChildren() do
@@ -1078,7 +1071,7 @@ local function LoadSkin()
 	end)
 
 	for i = 1, 2 do
-		T.SkinTab(_G["CovenantMissionFrameTab" .. i])
+		T.SkinTab(_G["CovenantMissionFrameTab"..i])
 	end
 
 	-- Followers
@@ -1094,10 +1087,8 @@ local function LoadSkin()
 	CovenantMissionFrameFollowers.ScrollBar.Back:SetSize(17, 15)
 	CovenantMissionFrameFollowers.ScrollBar.Track.Thumb:SetWidth(17)
 	CovenantMissionFrameFollowers.ScrollBar.Forward:SetSize(17, 15)
-	CovenantMissionFrameFollowers.ScrollBar:SetPoint("TOPLEFT", CovenantMissionFrameFollowers.ScrollBox, "TOPRIGHT", 7,
-		-11)
-	CovenantMissionFrameFollowers.ScrollBar:SetPoint("BOTTOMLEFT", CovenantMissionFrameFollowers.ScrollBox, "BOTTOMRIGHT",
-		7, 0)
+	CovenantMissionFrameFollowers.ScrollBar:SetPoint("TOPLEFT", CovenantMissionFrameFollowers.ScrollBox, "TOPRIGHT", 7, -11)
+	CovenantMissionFrameFollowers.ScrollBar:SetPoint("BOTTOMLEFT", CovenantMissionFrameFollowers.ScrollBox, "BOTTOMRIGHT", 7, 0)
 
 	local FollowerTab = CovenantMissionFrame.FollowerTab
 	FollowerTab:CreateBackdrop("Overlay")

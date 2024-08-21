@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	Professions skin
 ----------------------------------------------------------------------------------------
@@ -15,12 +14,10 @@ local function LoadSkin()
 	ProfessionsFrame.CraftingPage.TutorialButton:SetPoint("TOPLEFT", frame, "TOPLEFT", -5, 10)
 
 	T.SkinEditBox(frame.CraftingPage.RecipeList.SearchBox, nil, 16)
-	frame.CraftingPage.RecipeList.FilterDropdown:SkinButton()
+
+	T.SkinFilter(frame.CraftingPage.RecipeList.FilterDropdown)
 	frame.CraftingPage.RecipeList.FilterDropdown:SetHeight(20)
 	frame.CraftingPage.RecipeList.FilterDropdown:SetPoint("TOPRIGHT", ProfessionsFrame.CraftingPage.RecipeList, "TOPRIGHT", -8, -6)
-	T.SkinCloseButton(ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.ResetButton)
-	ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.ResetButton:ClearAllPoints()
-	ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.ResetButton:SetPoint("CENTER", ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown, "TOPRIGHT", 0, 0)
 
 	local RankBar = frame.CraftingPage.RankBar
 	RankBar.Border:Hide()
@@ -47,6 +44,18 @@ local function LoadSkin()
 		end
 	end
 
+	hooksecurefunc(_G.ProfessionsFrame.CraftingPage.RecipeList.ScrollBox, "Update", function(frame)
+		for _, child in next, {frame.ScrollTarget:GetChildren()} do
+			if child.CenterPiece and not child.isSkinned then
+				child:DisableDrawLayer("BACKGROUND")
+				child:CreateBackdrop("Overlay")
+				child.backdrop:SetPoint("TOPLEFT", child, 6, 0)
+				child.backdrop:SetPoint("BOTTOMRIGHT", child, -6, 4)
+				child.isSkinned = true
+			end
+		end
+	end)
+
 	local RecipeList = frame.CraftingPage.RecipeList
 	RecipeList:StripTextures()
 	RecipeList.BackgroundNineSlice:Hide()
@@ -64,7 +73,7 @@ local function LoadSkin()
 	SchematicForm.MinimalBackground:SetAlpha(0)
 
 	T.SkinCheckBox(SchematicForm.TrackRecipeCheckbox, 24)
-	--FIXME T.SkinCheckBox(SchematicForm.AllocateBestQualityCheckBox, 24)
+	T.SkinCheckBox(SchematicForm.AllocateBestQualityCheckbox, 24)
 
 	local function skinDetails(frame)
 		frame:SetFrameLevel(frame:GetFrameLevel() + 1)
@@ -155,35 +164,7 @@ local function LoadSkin()
 		end
 	end)
 
-	hooksecurefunc("OpenProfessionsItemFlyout", function(_, parent)
-		for i = 1, parent:GetNumChildren() do
-			local frame = select(i, parent:GetChildren())
-			if frame.HideUnownedCheckBox and not frame.backdrop then
-				frame:StripTextures()
-				frame:CreateBackdrop("Transparent")
-				frame.backdrop:SetFrameLevel(2)
-				frame.backdrop:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 5, 2)
-				T.SkinCheckBox(frame.HideUnownedCheckBox, 24)
-				hooksecurefunc(frame.ScrollBox, "Update", function(self)
-					for i = 1, self.ScrollTarget:GetNumChildren() do
-						local button = select(i, self.ScrollTarget:GetChildren())
-						if button.IconBorder and not button.styled then
-							button:SetTemplate("Transparent")
-							button.icon:CropIcon()
-							button:SetNormalTexture(0)
-							button:SetPushedTexture(0)
-							button:GetHighlightTexture():Hide()
-							T.SkinIconBorder(button.IconBorder, button)
-
-							button.styled = true
-						end
-					end
-				end)
-
-				break
-			end
-		end
-	end)
+	hooksecurefunc("OpenProfessionsItemFlyout", T.SkinProfessionsFlyout)
 
 	frame.CraftingPage.CreateAllButton:SkinButton()
 	frame.CraftingPage.CreateButton:SkinButton()
@@ -309,7 +290,8 @@ local function LoadSkin()
 	local tabs = {
 		Orders.BrowseFrame.PublicOrdersButton,
 		Orders.BrowseFrame.GuildOrdersButton,
-		Orders.BrowseFrame.PersonalOrdersButton
+		Orders.BrowseFrame.PersonalOrdersButton,
+		Orders.BrowseFrame.NpcOrdersButton
 	}
 
 	for i = 1, #tabs do
@@ -397,7 +379,7 @@ local function LoadSkin()
 	OrderDetails.Background:SetInside(OrderDetails.backdrop)
 
 	local OrderSchematicForm = OrderDetails.SchematicForm
-	--FIXME T.SkinCheckBox(OrderSchematicForm.AllocateBestQualityCheckBox)
+	T.SkinCheckBox(OrderSchematicForm.AllocateBestQualityCheckbox)
 	skinDetails(OrderSchematicForm.Details)
 
 	hooksecurefunc(OrderSchematicForm, "Init", function(frame)

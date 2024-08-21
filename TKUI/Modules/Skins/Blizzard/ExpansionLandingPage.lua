@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	Expansion Landing Page skin
 ----------------------------------------------------------------------------------------
@@ -42,6 +41,10 @@ end
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
 frame:SetScript("OnEvent", function(self, _, addon)
+	if C_AddOns.IsAddOnLoaded("Skinner") or C_AddOns.IsAddOnLoaded("Aurora") then
+		self:UnregisterEvent("ADDON_LOADED")
+		return
+	end
 	if ExpansionLandingPage then
 		LoadSkin(self)
 	end

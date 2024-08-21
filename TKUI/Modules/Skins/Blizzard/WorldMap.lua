@@ -45,6 +45,9 @@ local function LoadSkin()
 	QuestScrollFrame.Background:Hide()
 
 	QuestScrollFrame.SearchBox:DisableDrawLayer("BACKGROUND")
+	QuestScrollFrame.SearchBox:SetWidth(220)
+
+	QuestMapFrame.SettingsDropdown:SetPoint("TOPRIGHT", QuestScrollFrame, "TOPRIGHT", 0, 25)
 
 	local CampaignOverview = QuestMapFrame.CampaignOverview
 	CampaignOverview:StripTextures()

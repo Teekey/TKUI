@@ -1,320 +1,348 @@
 local T, C, L = unpack(TKUI)
 
+----------------------------------------------------------------------------------------
+--	Bank/Container skin
+----------------------------------------------------------------------------------------
+local function LoadSkin()
 
--- ----------------------------------------------------------------------------------------
--- --	Bank/Container skin
--- ----------------------------------------------------------------------------------------
--- local function LoadSkin()
--- 	if C.bag.enable == true or T.anotherBags then return end
+	local function SkinBagSlots(button)
+		if not button.styled then
+			local icon = button.icon
 
--- 	-- Container Frame
--- 	BagItemSearchBox:StripTextures(true)
--- 	BagItemSearchBox:CreateBackdrop("Overlay")
--- 	BagItemSearchBox.backdrop:SetPoint("TOPLEFT", 13, 0)
--- 	BagItemSearchBox.backdrop:SetPoint("BOTTOMRIGHT", -2, 0)
--- 	BagItemSearchBox:ClearAllPoints()
--- 	BagItemSearchBox:SetPoint("TOPRIGHT", BagItemAutoSortButton, "TOPLEFT", -3, 0)
--- 	BagItemSearchBox.ClearAllPoints = T.dummy
--- 	BagItemSearchBox.SetPoint = T.dummy
+			button:SetNormalTexture(0)
+			button:StyleButton()
+			button:SetTemplate("Default")
 
--- 	BagItemAutoSortButton:SetSize(18, 18)
--- 	BagItemAutoSortButton:StyleButton()
--- 	BagItemAutoSortButton:SetTemplate("Default")
--- 	BagItemAutoSortButton:GetNormalTexture():SetTexture("Interface\\Icons\\inv_pet_broom")
--- 	BagItemAutoSortButton:GetNormalTexture():SetTexCoord(0.1, 0.9, 0.1, 0.9)
--- 	BagItemAutoSortButton:GetNormalTexture():ClearAllPoints()
--- 	BagItemAutoSortButton:GetNormalTexture():SetPoint("TOPLEFT", 2, -2)
--- 	BagItemAutoSortButton:GetNormalTexture():SetPoint("BOTTOMRIGHT", -2, 2)
+			icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+			icon:ClearAllPoints()
+			icon:SetPoint("TOPLEFT", 2, -2)
+			icon:SetPoint("BOTTOMRIGHT", -2, 2)
 
--- 	ContainerFrameCombinedBags:StripTextures(true)
--- 	ContainerFrameCombinedBags:CreateBackdrop("Transparent")
--- 	ContainerFrameCombinedBags.Bg:Hide()
--- 	T.SkinCloseButton(ContainerFrameCombinedBags.CloseButton)
+			button.Count:SetFont(C.font.bags_font, C.font.bags_font_size, C.font.bags_font_style)
+			button.Count:SetShadowOffset(C.font.bags_font_shadow and 1 or 0, C.font.bags_font_shadow and -1 or 0)
+			button.Count:SetPoint("BOTTOMRIGHT", 1, 1)
 
--- 	-- ContainerFrameCombinedBags:ClearAllPoints()
--- 	-- ContainerFrameCombinedBags:SetPoint(unpack(C.position.bag))
--- 	-- ContainerFrameCombinedBags.SetPoint = T.dummy
+			T.SkinIconBorder(button.IconBorder, button)
 
--- 	ContainerFrameCombinedBags.MoneyFrame.Border:Hide()
--- 	ContainerFrame1MoneyFrame.Border:Hide()
+			button.IconQuestTexture:SetAlpha(0)
+			if button.Background then
+				button.Background:SetAlpha(0)
+			end
 
--- 	ContainerFrameCombinedBagsPortrait:SetAlpha(0)
--- 	ContainerFrameCombinedBagsPortraitButton.Highlight:SetAlpha(0)
--- 	ContainerFrameCombinedBagsPortraitButtonTexture = ContainerFrameCombinedBagsPortraitButton:CreateTexture(nil, "OVERLAY")
--- 	ContainerFrameCombinedBagsPortraitButtonTexture:SetSize(30, 30)
--- 	ContainerFrameCombinedBagsPortraitButtonTexture:SetPoint("CENTER", 2, 1)
--- 	ContainerFrameCombinedBagsPortraitButtonTexture:SetTexture("Interface\\Icons\\inv_misc_bag_08")
--- 	ContainerFrameCombinedBagsPortraitButtonTexture:SkinIcon()
+			button.styled = true
+		end
+	end
 
--- 	local function updateQuestItems(self)
--- 		for _, button in self:EnumerateValidItems() do
--- 			if button.IconQuestTexture:IsShown() then
--- 				if button.IconQuestTexture:GetTexture() == 368362 then
--- 					button:SetBackdropBorderColor(1, 0.3, 0.3)
--- 				else
--- 					button:SetBackdropBorderColor(1, 1, 0)
--- 				end
--- 			else
--- 				button:SetBackdropBorderColor(unpack(C.media.border_color))
--- 			end
--- 		end
--- 	end
+	local function SkinItemSlots(self)
+		for button in self.itemButtonPool:EnumerateActive() do
+			SkinBagSlots(button)
+		end
+	end
 
--- 	for i = 1, NUM_CONTAINER_FRAMES do
--- 		local frame = _G["ContainerFrame"..i]
--- 		local close = _G["ContainerFrame"..i].CloseButton
+	-- Container Frame
+	BagItemSearchBox:StripTextures(true)
+	BagItemSearchBox:CreateBackdrop("Overlay")
+	BagItemSearchBox.backdrop:SetPoint("TOPLEFT", 13, 0)
+	BagItemSearchBox.backdrop:SetPoint("BOTTOMRIGHT", -2, 0)
+	BagItemSearchBox:ClearAllPoints()
+	BagItemSearchBox:SetPoint("TOPRIGHT", BagItemAutoSortButton, "TOPLEFT", -3, 0)
+	BagItemSearchBox.ClearAllPoints = T.dummy
+	BagItemSearchBox.SetPoint = T.dummy
 
--- 		frame:StripTextures(true)
--- 		frame:CreateBackdrop("Transparent")
--- 		frame.backdrop:SetPoint("TOPLEFT", 4, -2)
--- 		frame.backdrop:SetPoint("BOTTOMRIGHT", 0, 2)
--- 		frame.Bg:Hide()
+	BagItemAutoSortButton:SetSize(18, 18)
+	BagItemAutoSortButton:StyleButton()
+	BagItemAutoSortButton:SetTemplate("Default")
+	BagItemAutoSortButton:GetNormalTexture():SetTexture("Interface\\Icons\\inv_pet_broom")
+	BagItemAutoSortButton:GetNormalTexture():SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	BagItemAutoSortButton:GetNormalTexture():ClearAllPoints()
+	BagItemAutoSortButton:GetNormalTexture():SetPoint("TOPLEFT", 2, -2)
+	BagItemAutoSortButton:GetNormalTexture():SetPoint("BOTTOMRIGHT", -2, 2)
 
--- 		frame.TitleContainer:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -1)
+	ContainerFrameCombinedBags:StripTextures(true)
+	ContainerFrameCombinedBags:CreateBackdrop("Transparent")
+	ContainerFrameCombinedBags.Bg:Hide()
+	T.SkinCloseButton(ContainerFrameCombinedBags.CloseButton)
 
--- 		local portrait = _G["ContainerFrame"..i.."Portrait"]
--- 		portrait:SetSize(28, 28)
--- 		portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -8)
--- 		portrait:SetTexCoord(0.2, 0.85, 0.2, 0.85)
--- 		if frame.PortraitContainer.CircleMask then frame.PortraitContainer.CircleMask:Hide() end
+	-- ContainerFrameCombinedBags:ClearAllPoints()
+	-- ContainerFrameCombinedBags:SetPoint(unpack(C.position.bag))
+	-- ContainerFrameCombinedBags.SetPoint = T.dummy
 
--- 		frame.b = CreateFrame("Frame", nil, frame)
--- 		frame.b:SetTemplate("Default")
--- 		frame.b:SetOutside(portrait)
+	ContainerFrameCombinedBags.MoneyFrame.Border:Hide()
+	ContainerFrame1MoneyFrame.Border:Hide()
 
--- 		T.SkinCloseButton(close, frame.backdrop)
+	ContainerFrameCombinedBagsPortrait:SetAlpha(0)
+	ContainerFrameCombinedBagsPortraitButton.Highlight:SetAlpha(0)
+	ContainerFrameCombinedBagsPortraitButtonTexture = ContainerFrameCombinedBagsPortraitButton:CreateTexture(nil, "OVERLAY")
+	ContainerFrameCombinedBagsPortraitButtonTexture:SetSize(30, 30)
+	ContainerFrameCombinedBagsPortraitButtonTexture:SetPoint("CENTER", 2, 1)
+	ContainerFrameCombinedBagsPortraitButtonTexture:SetTexture("Interface\\Icons\\inv_misc_bag_08")
+	ContainerFrameCombinedBagsPortraitButtonTexture:SkinIcon()
 
--- 		for j = 1, 36 do
--- 			local item = _G["ContainerFrame"..i.."Item"..j]
--- 			local icon = _G["ContainerFrame"..i.."Item"..j.."IconTexture"]
--- 			local quest = _G["ContainerFrame"..i.."Item"..j.."IconQuestTexture"]
--- 			local border = _G["ContainerFrame"..i.."Item"..j].IconBorder
+	local function updateQuestItems(self)
+		for _, button in self:EnumerateValidItems() do
+			if button.IconQuestTexture:IsShown() then
+				if button.IconQuestTexture:GetTexture() == 368362 then
+					button:SetBackdropBorderColor(1, 0.3, 0.3)
+				else
+					button:SetBackdropBorderColor(1, 1, 0)
+				end
+			else
+				button:SetBackdropBorderColor(unpack(C.media.border_color))
+			end
+		end
+	end
 
--- 			border:SetAlpha(0)
+	hooksecurefunc(ContainerFrameCombinedBags, "UpdateItemSlots", SkinItemSlots)
+	hooksecurefunc(ContainerFrameCombinedBags, "UpdateItems", updateQuestItems)
 
--- 			item:SetNormalTexture(0)
--- 			item:StyleButton()
--- 			item:SetTemplate("Default")
+	for i = 1, NUM_CONTAINER_FRAMES do
+		local frame = _G["ContainerFrame"..i]
+		local close = _G["ContainerFrame"..i].CloseButton
 
--- 			icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
--- 			icon:ClearAllPoints()
--- 			icon:SetPoint("TOPLEFT", 2, -2)
--- 			icon:SetPoint("BOTTOMRIGHT", -2, 2)
+		frame:StripTextures(true)
+		frame:CreateBackdrop("Transparent")
+		frame.backdrop:SetPoint("TOPLEFT", 4, -2)
+		frame.backdrop:SetPoint("BOTTOMRIGHT", 0, 2)
+		frame.Bg:Hide()
 
--- 			quest:SetAlpha(0)
--- 		end
+		frame.TitleContainer:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -1)
 
--- 		-- Color QuestItem
--- 		hooksecurefunc(frame, "UpdateItems", function(self)
--- 			updateQuestItems(self)
--- 		end)
--- 	end
+		local portrait = _G["ContainerFrame"..i.."Portrait"]
+		portrait:SetSize(28, 28)
+		portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", 10, -8)
+		portrait:SetTexCoord(0.2, 0.85, 0.2, 0.85)
+		if frame.PortraitContainer.CircleMask then frame.PortraitContainer.CircleMask:Hide() end
 
--- 	BackpackTokenFrame:StripTextures(true)
--- 	hooksecurefunc(_G.BackpackTokenFrame, "Update", function (container)
--- 		for _, token in next, container.Tokens do
--- 			if not token.Icon.styled then
--- 				token.Icon:SkinIcon()
--- 				token.Count:ClearAllPoints()
--- 				token.Count:SetPoint("RIGHT", token.Icon, "LEFT", -5, 0)
--- 				token.Icon.styled = true
--- 			end
--- 		end
--- 	end)
+		frame.b = CreateFrame("Frame", nil, frame)
+		frame.b:SetTemplate("Default")
+		frame.b:SetOutside(portrait)
 
--- 	-- Bank Frame
--- 	BankFrame:StripTextures(true)
--- 	BankFrame:CreateBackdrop("Transparent")
--- 	BankFrame.backdrop:SetAllPoints()
--- 	BankFramePortrait:SetAlpha(0)
+		T.SkinCloseButton(close, frame.backdrop)
 
--- 	BankItemSearchBox:StripTextures(true)
--- 	BankItemSearchBox:CreateBackdrop("Overlay")
--- 	BankItemSearchBox.backdrop:SetPoint("TOPLEFT", 13, 0)
--- 	BankItemSearchBox.backdrop:SetPoint("BOTTOMRIGHT", -2, 0)
+		hooksecurefunc(frame, "UpdateItemSlots", SkinItemSlots)
+		hooksecurefunc(frame, "UpdateItems", updateQuestItems)
+	end
 
--- 	BankItemAutoSortButton:StyleButton()
--- 	BankItemAutoSortButton:SetTemplate("Default")
--- 	BankItemAutoSortButton:SetSize(20, 20)
--- 	BankItemAutoSortButton:SetPoint("TOPLEFT", BankItemSearchBox, "TOPRIGHT", 3, 0)
--- 	BankItemAutoSortButton:GetNormalTexture():SetTexture("Interface\\Icons\\inv_pet_broom")
--- 	BankItemAutoSortButton:GetNormalTexture():SetTexCoord(0.1, 0.9, 0.1, 0.9)
--- 	BankItemAutoSortButton:GetNormalTexture():ClearAllPoints()
--- 	BankItemAutoSortButton:GetNormalTexture():SetPoint("TOPLEFT", 2, -2)
--- 	BankItemAutoSortButton:GetNormalTexture():SetPoint("BOTTOMRIGHT", -2, 2)
+	BackpackTokenFrame:StripTextures(true)
+	hooksecurefunc(_G.BackpackTokenFrame, "Update", function (container)
+		for _, token in next, container.Tokens do
+			if not token.Icon.styled then
+				token.Icon:SkinIcon()
+				token.Count:ClearAllPoints()
+				token.Count:SetPoint("RIGHT", token.Icon, "LEFT", -5, 0)
+				token.Icon.styled = true
+			end
+		end
+	end)
 
--- 	BankFrameMoneyFrameInset:StripTextures()
--- 	BankFrameMoneyFrameBorder:StripTextures()
+	-- Bank Frame
+	BankFrame:StripTextures(true)
+	BankFrame:CreateBackdrop("Transparent")
+	BankFrame.backdrop:SetAllPoints()
+	BankFramePortrait:SetAlpha(0)
 
--- 	BankFramePurchaseButton:SkinButton()
--- 	T.SkinCloseButton(BankFrameCloseButton, BankFrame.backdrop)
+	BankItemSearchBox:StripTextures(true)
+	BankItemSearchBox:CreateBackdrop("Overlay")
+	BankItemSearchBox.backdrop:SetPoint("TOPLEFT", 13, 0)
+	BankItemSearchBox.backdrop:SetPoint("BOTTOMRIGHT", -2, 0)
 
--- 	BankSlotsFrame:StripTextures()
+	BankItemAutoSortButton:StyleButton()
+	BankItemAutoSortButton:SetTemplate("Default")
+	BankItemAutoSortButton:SetSize(20, 20)
+	BankItemAutoSortButton:SetPoint("TOPLEFT", BankItemSearchBox, "TOPRIGHT", 3, 0)
+	BankItemAutoSortButton:GetNormalTexture():SetTexture("Interface\\Icons\\inv_pet_broom")
+	BankItemAutoSortButton:GetNormalTexture():SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	BankItemAutoSortButton:GetNormalTexture():ClearAllPoints()
+	BankItemAutoSortButton:GetNormalTexture():SetPoint("TOPLEFT", 2, -2)
+	BankItemAutoSortButton:GetNormalTexture():SetPoint("BOTTOMRIGHT", -2, 2)
 
--- 	for i = 1, 28 do
--- 		local item = _G["BankFrameItem"..i]
--- 		local icon = _G["BankFrameItem"..i.."IconTexture"]
--- 		local quest = _G["BankFrameItem"..i].IconQuestTexture
--- 		local border = _G["BankFrameItem"..i].IconBorder
+	BankFrameMoneyFrameBorder:Hide()
 
--- 		border:SetAlpha(0)
+	BankFramePurchaseButton:SkinButton()
+	T.SkinCloseButton(BankFrameCloseButton, BankFrame.backdrop)
 
--- 		item:SetNormalTexture(0)
--- 		item:StyleButton()
--- 		item:SetTemplate("Default")
+	BankSlotsFrame:StripTextures()
 
--- 		icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
--- 		icon:ClearAllPoints()
--- 		icon:SetPoint("TOPLEFT", 2, -2)
--- 		icon:SetPoint("BOTTOMRIGHT", -2, 2)
+	for i = 1, 28 do
+		local item = _G["BankFrameItem"..i]
+		SkinBagSlots(item)
+	end
 
--- 		if quest then
--- 			quest:SetAlpha(0)
--- 		end
--- 	end
+	for i = 1, 7 do
+		local bag = BankSlotsFrame["Bag"..i]
+		local icon = bag.icon
 
--- 	for i = 1, 7 do
--- 		local bag = BankSlotsFrame["Bag"..i]
--- 		local icon = bag.icon
+		bag.IconBorder:SetAlpha(0)
 
--- 		bag.IconBorder:SetAlpha(0)
+		bag:StripTextures()
+		bag:StyleButton()
+		bag:SetTemplate("Default")
 
--- 		bag:StripTextures()
--- 		bag:StyleButton()
--- 		bag:SetTemplate("Default")
+		icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+		icon:ClearAllPoints()
+		icon:SetPoint("TOPLEFT", 2, -2)
+		icon:SetPoint("BOTTOMRIGHT", -2, 2)
+	end
 
--- 		icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
--- 		icon:ClearAllPoints()
--- 		icon:SetPoint("TOPLEFT", 2, -2)
--- 		icon:SetPoint("BOTTOMRIGHT", -2, 2)
--- 	end
+	-- Tabs
+	for i = 1, 3 do
+		T.SkinTab(_G["BankFrameTab"..i])
+	end
 
--- 	-- Tabs
--- 	for i = 1, 2 do
--- 		T.SkinTab(_G["BankFrameTab"..i])
--- 	end
+	-- ReagentBank
+	ReagentBankFrame:StripTextures()
+	ReagentBankFrame:DisableDrawLayer("BACKGROUND")
+	ReagentBankFrame:DisableDrawLayer("ARTWORK")
 
--- 	-- ReagentBank
--- 	ReagentBankFrame:StripTextures()
--- 	ReagentBankFrame:DisableDrawLayer("BACKGROUND")
--- 	ReagentBankFrame:DisableDrawLayer("ARTWORK")
+	ReagentBankFrameUnlockInfo:StripTextures()
+	ReagentBankFrameUnlockInfo:CreateBackdrop("Overlay")
+	ReagentBankFrameUnlockInfo.backdrop:SetPoint("TOPLEFT", 4, -2)
+	ReagentBankFrameUnlockInfo.backdrop:SetPoint("BOTTOMRIGHT", -4, 2)
+	ReagentBankFrameUnlockInfo.backdrop:SetFrameLevel(ReagentBankFrameUnlockInfo.backdrop:GetFrameLevel() + 1)
 
--- 	ReagentBankFrameUnlockInfo:StripTextures()
--- 	ReagentBankFrameUnlockInfo:CreateBackdrop("Overlay")
--- 	ReagentBankFrameUnlockInfo.backdrop:SetPoint("TOPLEFT", 4, -2)
--- 	ReagentBankFrameUnlockInfo.backdrop:SetPoint("BOTTOMRIGHT", -4, 2)
--- 	ReagentBankFrameUnlockInfo.backdrop:SetFrameLevel(ReagentBankFrameUnlockInfo.backdrop:GetFrameLevel() + 1)
+	ReagentBankFrameUnlockInfoPurchaseButton:SkinButton()
+	ReagentBankFrameUnlockInfoPurchaseButton:SetFrameLevel(ReagentBankFrameUnlockInfo:GetFrameLevel() + 3)
+	ReagentBankFrame.DespositButton:SkinButton()
 
--- 	ReagentBankFrameUnlockInfoPurchaseButton:SkinButton()
--- 	ReagentBankFrameUnlockInfoPurchaseButton:SetFrameLevel(ReagentBankFrameUnlockInfo:GetFrameLevel() + 3)
--- 	ReagentBankFrame.DespositButton:SkinButton()
+	ReagentBankFrame:HookScript("OnShow", function()
+		for i = 1, 98 do
+			local item = _G["ReagentBankFrameItem"..i]
+			SkinBagSlots(item)
+			BankFrameItemButton_Update(item)
+		end
+	end)
 
--- 	ReagentBankFrame:HookScript("OnShow", function()
--- 		for i = 1, 98 do
--- 			local item = _G["ReagentBankFrameItem"..i]
--- 			local icon = _G["ReagentBankFrameItem"..i].icon
--- 			local border = _G["ReagentBankFrameItem"..i].IconBorder
+	hooksecurefunc("BankFrameItemButton_Update", function(frame)
+		if not frame.isBag and frame.IconQuestTexture:IsShown() then
+			if frame.IconQuestTexture:GetTexture() == 368362 then
+				frame:SetBackdropBorderColor(1, 0.3, 0.3)
+			else
+				frame:SetBackdropBorderColor(1, 1, 0)
+			end
+		end
+	end)
 
--- 			border:SetAlpha(0)
+	-- Frame Anchors
+	hooksecurefunc("UpdateContainerFrameAnchors", function()
+		local frame, xOffset, yOffset, screenHeight, freeScreenHeight, leftMostPoint, column
+		local screenWidth = GetScreenWidth()
+		local containerScale = 1
+		local leftLimit = 0
 
--- 			item:SetNormalTexture(0)
--- 			item:StyleButton()
--- 			item:SetTemplate("Default")
+		if BankFrame:IsShown() then
+			leftLimit = BankFrame:GetRight() - 25
+		end
 
--- 			icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
--- 			icon:ClearAllPoints()
--- 			icon:SetPoint("TOPLEFT", 2, -2)
--- 			icon:SetPoint("BOTTOMRIGHT", -2, 2)
--- 		end
--- 	end)
+		while containerScale > 0.75 do
+			screenHeight = GetScreenHeight() / containerScale
+			xOffset = CONTAINER_OFFSET_X / containerScale
+			yOffset = CONTAINER_OFFSET_Y / containerScale
+			freeScreenHeight = screenHeight - yOffset
+			leftMostPoint = screenWidth - xOffset
+			column = 1
+			local frameHeight
+			-- for _, frameName in ipairs(ContainerFrame1.bags) do
+				-- frameHeight = _G[frameName]:GetHeight()
+				-- if freeScreenHeight < frameHeight then
+					-- column = column + 1
+					-- leftMostPoint = screenWidth - (column * 192 * containerScale) - xOffset
+					-- freeScreenHeight = screenHeight - yOffset
+				-- end
+				-- freeScreenHeight = freeScreenHeight - frameHeight - 3
+			-- end
+			if leftMostPoint < leftLimit then
+				containerScale = containerScale - 0.01
+			else
+				break
+			end
+		end
 
--- 	-- Color QuestItem
--- 	hooksecurefunc(ContainerFrameCombinedBags, "UpdateItems", function(self)
--- 		updateQuestItems(self)
--- 	end)
+		if containerScale < 0.75 then
+			containerScale = 0.75
+		end
 
--- 	hooksecurefunc("BankFrameItemButton_Update", function(frame)
--- 		if not frame.isBag and frame.IconQuestTexture:IsShown() then
--- 			if frame.IconQuestTexture:GetTexture() == 368362 then
--- 				frame:SetBackdropBorderColor(1, 0.3, 0.3)
--- 			else
--- 				frame:SetBackdropBorderColor(1, 1, 0)
--- 			end
--- 		else
--- 			if frame.SetBackdropBorderColor then -- ReagentBank
--- 				frame:SetBackdropBorderColor(unpack(C.media.border_color))
--- 			end
--- 		end
--- 	end)
+		screenHeight = GetScreenHeight() / containerScale
+		xOffset = CONTAINER_OFFSET_X / containerScale
+		yOffset = CONTAINER_OFFSET_Y / containerScale
+		freeScreenHeight = screenHeight - yOffset
+		column = 0
 
--- 	-- Frame Anchors
--- 	hooksecurefunc("UpdateContainerFrameAnchors", function()
--- 		local frame, xOffset, yOffset, screenHeight, freeScreenHeight, leftMostPoint, column
--- 		local screenWidth = GetScreenWidth()
--- 		local containerScale = 1
--- 		local leftLimit = 0
+		-- local bagsPerColumn = 0
+		-- for index, frameName in ipairs(ContainerFrame1.bags) do
+			-- frame = _G[frameName]
+			-- frame:SetScale(1)
+			-- if index == 1 then
+				-- frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -21, 22)
+				-- bagsPerColumn = bagsPerColumn + 1
+			-- elseif freeScreenHeight < frame:GetHeight() then
+				-- column = column + 1
+				-- freeScreenHeight = screenHeight - yOffset
+				-- if column > 1 then
+					-- frame:SetPoint("BOTTOMRIGHT", ContainerFrame1.bags[(index - bagsPerColumn) - 1], "BOTTOMLEFT", 0, 0)
+				-- else
+					-- frame:SetPoint("BOTTOMRIGHT", ContainerFrame1.bags[index - bagsPerColumn], "BOTTOMLEFT", 0, 0)
+				-- end
+				-- bagsPerColumn = 0
+			-- else
+				-- frame:SetPoint("BOTTOMRIGHT", ContainerFrame1.bags[index - 1], "TOPRIGHT", 0, 0)
+				-- bagsPerColumn = bagsPerColumn + 1
+			-- end
+			-- freeScreenHeight = freeScreenHeight - frame:GetHeight() - 3
+		-- end
+	end)
 
--- 		if BankFrame:IsShown() then
--- 			leftLimit = BankFrame:GetRight() - 25
--- 		end
+	-- Warband
+	AccountBankPanel:StripTextures()
 
--- 		while containerScale > 0.75 do
--- 			screenHeight = GetScreenHeight() / containerScale
--- 			xOffset = CONTAINER_OFFSET_X / containerScale
--- 			yOffset = CONTAINER_OFFSET_Y / containerScale
--- 			freeScreenHeight = screenHeight - yOffset
--- 			leftMostPoint = screenWidth - xOffset
--- 			column = 1
--- 			local frameHeight
--- 			-- for _, frameName in ipairs(ContainerFrame1.bags) do
--- 				-- frameHeight = _G[frameName]:GetHeight()
--- 				-- if freeScreenHeight < frameHeight then
--- 					-- column = column + 1
--- 					-- leftMostPoint = screenWidth - (column * 192 * containerScale) - xOffset
--- 					-- freeScreenHeight = screenHeight - yOffset
--- 				-- end
--- 				-- freeScreenHeight = freeScreenHeight - frameHeight - 3
--- 			-- end
--- 			if leftMostPoint < leftLimit then
--- 				containerScale = containerScale - 0.01
--- 			else
--- 				break
--- 			end
--- 		end
+	hooksecurefunc(AccountBankPanel, "GenerateItemSlotsForSelectedTab", SkinItemSlots)
 
--- 		if containerScale < 0.75 then
--- 			containerScale = 0.75
--- 		end
+	local function SkinBankTab(button)
+		if not button.styled then
+			button.Border:SetAlpha(0)
 
--- 		screenHeight = GetScreenHeight() / containerScale
--- 		xOffset = CONTAINER_OFFSET_X / containerScale
--- 		yOffset = CONTAINER_OFFSET_Y / containerScale
--- 		freeScreenHeight = screenHeight - yOffset
--- 		column = 0
+			if button.Background then
+				button.Background:SetAlpha(0)
+			end
 
--- 		-- local bagsPerColumn = 0
--- 		-- for index, frameName in ipairs(ContainerFrame1.bags) do
--- 			-- frame = _G[frameName]
--- 			-- frame:SetScale(1)
--- 			-- if index == 1 then
--- 				-- frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -21, 22)
--- 				-- bagsPerColumn = bagsPerColumn + 1
--- 			-- elseif freeScreenHeight < frame:GetHeight() then
--- 				-- column = column + 1
--- 				-- freeScreenHeight = screenHeight - yOffset
--- 				-- if column > 1 then
--- 					-- frame:SetPoint("BOTTOMRIGHT", ContainerFrame1.bags[(index - bagsPerColumn) - 1], "BOTTOMLEFT", 0, 0)
--- 				-- else
--- 					-- frame:SetPoint("BOTTOMRIGHT", ContainerFrame1.bags[index - bagsPerColumn], "BOTTOMLEFT", 0, 0)
--- 				-- end
--- 				-- bagsPerColumn = 0
--- 			-- else
--- 				-- frame:SetPoint("BOTTOMRIGHT", ContainerFrame1.bags[index - 1], "TOPRIGHT", 0, 0)
--- 				-- bagsPerColumn = bagsPerColumn + 1
--- 			-- end
--- 			-- freeScreenHeight = freeScreenHeight - frame:GetHeight() - 3
--- 		-- end
--- 	end)
--- end
+			button:SetTemplate("Default")
+			button:StyleButton()
 
--- tinsert(T.SkinFuncs["TKUI"], LoadSkin)
+			button.SelectedTexture:SetColorTexture(1, 0.82, 0, 0.3)
+			button.SelectedTexture:SetPoint("TOPLEFT", 2, -2)
+			button.SelectedTexture:SetPoint("BOTTOMRIGHT", -2, 2)
+
+			button.Icon:ClearAllPoints()
+			button.Icon:SetPoint("TOPLEFT", 2, -2)
+			button.Icon:SetPoint("BOTTOMRIGHT", -2, 2)
+			button.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+
+			button.styled = true
+		end
+	end
+
+	hooksecurefunc(AccountBankPanel, "RefreshBankTabs", function(self)
+		for tab in self.bankTabPool:EnumerateActive() do
+			SkinBankTab(tab)
+		end
+	end)
+	SkinBankTab(AccountBankPanel.PurchaseTab)
+
+	AccountBankPanel.ItemDepositFrame.DepositButton:SkinButton()
+	T.SkinCheckBox(AccountBankPanel.ItemDepositFrame.IncludeReagentsCheckbox)
+	AccountBankPanel.MoneyFrame.Border:Hide()
+	AccountBankPanel.MoneyFrame.WithdrawButton:SkinButton()
+	AccountBankPanel.MoneyFrame.DepositButton:SkinButton()
+
+	AccountBankPanel.PurchasePrompt:StripTextures()
+	AccountBankPanel.PurchasePrompt:CreateBackdrop("Overlay")
+	AccountBankPanel.PurchasePrompt.backdrop:SetPoint("TOPLEFT", 4, -2)
+	AccountBankPanel.PurchasePrompt.backdrop:SetPoint("BOTTOMRIGHT", -4, 2)
+	AccountBankPanel.PurchasePrompt.backdrop:SetFrameLevel(AccountBankPanel.PurchasePrompt.backdrop:GetFrameLevel() + 1)
+
+	AccountBankPanel.PurchasePrompt.TabCostFrame.PurchaseButton:SkinButton()
+	AccountBankPanel.PurchasePrompt.TabCostFrame.PurchaseButton:SetFrameLevel(AccountBankPanel.PurchasePrompt:GetFrameLevel() + 3)
+
+	T.SkinIconSelectionFrame(AccountBankPanel.TabSettingsMenu)
+end
+
+tinsert(T.SkinFuncs["TKUI"], LoadSkin)

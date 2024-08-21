@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	AuctionUI skin
 ----------------------------------------------------------------------------------------
@@ -16,8 +15,9 @@ local function LoadSkin()
 
 	AuctionHouseFrame.SearchBar.FavoritesSearchButton:SetSize(22, 22)
 	T.SkinEditBox(AuctionHouseFrame.SearchBar.SearchBox, nil, 18)
+	T.SkinFilter(AuctionHouseFrame.SearchBar.FilterButton)
 	T.SkinCloseButton(AuctionHouseFrame.SearchBar.FilterButton.ClearFiltersButton)
-	AuctionHouseFrame.SearchBar.FilterButton.ClearFiltersButton:SetPoint("TOPRIGHT", 3, 6)
+	AuctionHouseFrame.SearchBar.FilterButton.ClearFiltersButton:SetPoint("TOPRIGHT", 5, 8)
 
 	local function SkinEditBoxes(Frame)
 		T.SkinEditBox(Frame.MinLevel)
@@ -26,11 +26,12 @@ local function LoadSkin()
 		Frame.MaxLevel.backdrop:SetPoint("BOTTOMRIGHT", -3, 0)
 	end
 
-	SkinEditBoxes(AuctionHouseFrame.SearchBar.FilterButton.LevelRangeFrame)
+	--FIDME SkinEditBoxes(AuctionHouseFrame.SearchBar.FilterButton.LevelRangeFrame)
+
+	AuctionHouseFrame.SearchBar.FilterButton:SetHeight(22)
 
 	local buttons = {
 		AuctionHouseFrame.SearchBar.SearchButton,
-		AuctionHouseFrame.SearchBar.FilterButton,
 		AuctionHouseFrame.SearchBar.FavoritesSearchButton,
 		AuctionHouseFrame.ItemSellFrame.QuantityInput.MaxButton,
 		AuctionHouseFrame.ItemSellFrame.PostButton,
@@ -84,6 +85,8 @@ local function LoadSkin()
 
 	T.SkinTab(AuctionHouseFrameAuctionsFrameAuctionsTab, true)
 	T.SkinTab(AuctionHouseFrameAuctionsFrameBidsTab, true)
+
+	AuctionHouseFrameAuctionsFrame.SummaryList:SetPoint("TOP", AuctionHouseFrameAuctionsFrameAuctionsTab, "BOTTOM", 0, -2)
 
 	AuctionHouseFrameBuyTab:ClearAllPoints()
 	AuctionHouseFrameBuyTab:SetPoint("BOTTOMLEFT", AuctionHouseFrame, "BOTTOMLEFT", 0, -32)
@@ -227,8 +230,8 @@ local function LoadSkin()
 			SkinMoneyBox(frame.SecondaryPriceInput.MoneyInputFrame.SilverBox)
 		end
 
-		T.SkinDropDownBox(frame.DurationDropDown.DropDown)
-		frame.DurationDropDown.DropDown.backdrop:SetPoint("TOPLEFT", 20, -1)
+		T.SkinDropDownBox(frame.Duration.Dropdown)
+		frame.Duration.Dropdown.backdrop:SetPoint("TOPLEFT", 20, -1)
 	end
 
 	T.SkinCheckBox(AuctionHouseFrame.ItemSellFrame.BuyoutModeCheckButton, 25)

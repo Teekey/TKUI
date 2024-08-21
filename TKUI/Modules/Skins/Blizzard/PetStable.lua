@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	PetStable skin
 ----------------------------------------------------------------------------------------
@@ -12,11 +11,11 @@ local function LoadSkin()
 	list:StripTextures()
 	list.ListCounter:StripTextures()
 
+	StableFrame.MainHelpButton.Ring:Hide()
+	StableFrame.MainHelpButton:SetPoint("TOPLEFT", StableFrame, "TOPLEFT", -10, 15)
+
 	T.SkinEditBox(list.FilterBar.SearchBox, nil, 20)
-	--FIXME list.FilterBar.FilterButton:SkinButton()
-	-- T.SkinCloseButton(list.FilterBar.FilterButton.ResetButton)
-	-- list.FilterBar.FilterButton.ResetButton:ClearAllPoints()
-	-- list.FilterBar.FilterButton.ResetButton:SetPoint("CENTER", list.FilterBar.FilterButton, "TOPRIGHT", 0, 0)
+	T.SkinFilter(list.FilterBar.FilterDropdown, true)
 	T.SkinScrollBar(list.ScrollBar)
 
 	hooksecurefunc(StableFrame.PetModelScene.PetInfo.Type, "SetText", T.ReplaceIconString)

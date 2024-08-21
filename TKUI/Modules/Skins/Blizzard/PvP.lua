@@ -6,11 +6,15 @@ local T, C, L = unpack(TKUI)
 local LoadTootlipSkin = CreateFrame("Frame")
 LoadTootlipSkin:RegisterEvent("ADDON_LOADED")
 LoadTootlipSkin:SetScript("OnEvent", function(self, _, addon)
+	if C_AddOns.IsAddOnLoaded("Skinner") or C_AddOns.IsAddOnLoaded("Aurora") or not C.tooltip.enable then
+		self:UnregisterEvent("ADDON_LOADED")
+		return
+	end
+
 	if addon == "Blizzard_PVPUI" then
-		ConquestTooltip:SetTemplate("Transparent")
+		ConquestTooltip.NineSlice:SetTemplate("Transparent")
 	end
 end)
-
 
 local function LoadSkin()
 	-- Set texture to hide circle
@@ -56,15 +60,14 @@ local function LoadSkin()
 	HonorFrame.BonusFrame:StripTextures()
 	HonorFrame.BonusFrame.ShadowOverlay:StripTextures()
 
-	T.SkinDropDownBox(HonorFrameTypeDropDown, 165)
-	HonorFrameTypeDropDown:SetPoint("BOTTOMRIGHT", HonorFrame.Inset, "TOPRIGHT", -6, -1)
+	T.SkinDropDownBox(HonorFrameTypeDropdown, 165)
+	HonorFrameTypeDropdown:SetPoint("BOTTOMRIGHT", HonorFrame.Inset, "TOPRIGHT", -14, -1)
 	T.SkinScrollBar(HonorFrame.SpecificScrollBar)
-	--HonorFrame.SpecificScrollBar:SetPoint("TOPLEFT", HonorFrameSpecificFrame, "TOPRIGHT", 0, -15)
-	--HonorFrame.SpecificScrollBar:SetPoint("BOTTOMLEFT", HonorFrameSpecificFrame, "BOTTOMRIGHT", 0, 15)
+	HonorFrame.SpecificScrollBar:SetPoint("TOPLEFT", HonorFrame, "TOPRIGHT", -19, -92)
+	HonorFrame.SpecificScrollBar:SetPoint("BOTTOMLEFT", HonorFrame, "BOTTOMRIGHT", -19, 27)
 	HonorFrameQueueButton:SkinButton(true)
 
 	PVPQueueFrame.HonorInset:StripTextures()
-	PVPQueueFrame.HonorInset.RatedPanel.Label:SetWidth(160)
 
 	local RewardFrameSeason = PVPQueueFrame.HonorInset.RatedPanel.SeasonRewardFrame
 	RewardFrameSeason.Ring:Hide()
@@ -198,7 +201,7 @@ local function LoadSkin()
 	ConquestFrame.Inset:StripTextures()
 	ConquestFrame.ShadowOverlay:StripTextures()
 
-	for _, button in pairs({ConquestFrame.RatedSoloShuffle, ConquestFrame.Arena2v2, ConquestFrame.Arena3v3, ConquestFrame.RatedBG}) do
+	for _, button in pairs({ConquestFrame.RatedSoloShuffle, ConquestFrame.Arena2v2, ConquestFrame.Arena3v3, ConquestFrame.RatedBG, ConquestFrame.RatedBGBlitz}) do
 		button:StripTextures()
 		button:SetTemplate("Overlay")
 		button:StyleButton()

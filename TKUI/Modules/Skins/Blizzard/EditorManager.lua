@@ -1,5 +1,4 @@
 local T, C, L = unpack(TKUI)
-if C.skins.blizzard_frames ~= true then return end
 
 ----------------------------------------------------------------------------------------
 --	Edit Mode Manager skin

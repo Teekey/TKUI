@@ -3,7 +3,8 @@ local T, C, L = unpack(TKUI)
 ----------------------------------------------------------------------------------------
 --	UIWidget position
 ----------------------------------------------------------------------------------------
-local top, below, power = _G["UIWidgetTopCenterContainerFrame"], _G["UIWidgetBelowMinimapContainerFrame"], _G["UIWidgetPowerBarContainerFrame"]
+local top, below, power = _G["UIWidgetTopCenterContainerFrame"], _G["UIWidgetBelowMinimapContainerFrame"],
+	_G["UIWidgetPowerBarContainerFrame"]
 
 -- Top Widget
 local topAnchor = CreateFrame("Frame", "UIWidgetTopAnchor", UIParent)
@@ -49,7 +50,7 @@ hooksecurefunc(power, "SetPoint", function(self, _, anchor)
 end)
 
 -- Mover for all widgets
-for _, frame in pairs({top, below}) do
+for _, frame in pairs({ top, below }) do
 	local anchor = frame == top and topAnchor or frame == below and belowAnchor
 	anchor:SetMovable(true)
 	anchor:SetClampedToScreen(true)
@@ -79,11 +80,11 @@ end
 --	UIWidget skin
 ----------------------------------------------------------------------------------------
 local atlasColors = {
-	["UI-Frame-Bar-Fill-Blue"] = {0.2, 0.6, 1},
-	["UI-Frame-Bar-Fill-Red"] = {0.9, 0.2, 0.2},
-	["UI-Frame-Bar-Fill-Yellow"] = {1, 0.6, 0},
-	["objectivewidget-bar-fill-left"] = {0.2, 0.6, 1},
-	["objectivewidget-bar-fill-right"] = {0.9, 0.2, 0.2}
+	["UI-Frame-Bar-Fill-Blue"] = { 0.2, 0.6, 1 },
+	["UI-Frame-Bar-Fill-Red"] = { 0.9, 0.2, 0.2 },
+	["UI-Frame-Bar-Fill-Yellow"] = { 1, 0.6, 0 },
+	["objectivewidget-bar-fill-left"] = { 0.2, 0.6, 1 },
+	["objectivewidget-bar-fill-right"] = { 0.9, 0.2, 0.2 }
 }
 
 local function SkinStatusBar(widget)
@@ -122,7 +123,7 @@ local function SkinStatusBar(widget)
 			Mixin(bar, BackdropTemplateMixin)
 			bar:SetBackdrop({
 				bgFile = C.media.blank,
-				insets = {left = 0, right = 0, top = 0, bottom = 0}
+				insets = { left = 0, right = 0, top = 0, bottom = 0 }
 			})
 			bar:SetBackdropColor(0.1, 0.1, 0.1, 1)
 		else
@@ -133,7 +134,7 @@ local function SkinStatusBar(widget)
 end
 
 local function SkinDoubleStatusBar(widget)
-	for _, bar in pairs({widget.LeftBar, widget.RightBar}) do
+	for _, bar in pairs({ widget.LeftBar, widget.RightBar }) do
 		local atlas = bar:GetStatusBarTexture()
 		if atlasColors[atlas] then
 			bar:SetStatusBarTexture(C.media.texture)
@@ -182,13 +183,13 @@ VigorBar:SetSize(250, 12)
 VigorBar:Hide()
 
 for i = 1, 6 do
-	VigorBar[i] = CreateFrame("StatusBar", "Vigor"..i, VigorBar)
+	VigorBar[i] = CreateFrame("StatusBar", "Vigor" .. i, VigorBar)
 	VigorBar[i]:SetSize((250 - 5) / 6, 12)
 
 	if i == 1 then
 		VigorBar[i]:SetPoint("TOPLEFT", VigorBar, "TOPLEFT", 0, 0)
 	else
-		VigorBar[i]:SetPoint("TOPLEFT", VigorBar[i-1], "TOPRIGHT", 1, 0)
+		VigorBar[i]:SetPoint("TOPLEFT", VigorBar[i - 1], "TOPRIGHT", 1, 0)
 	end
 	VigorBar[i]:SetStatusBarTexture(C.media.texture)
 	VigorBar[i]:SetMinMaxValues(0, 100)

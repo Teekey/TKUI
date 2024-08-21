@@ -1,6 +1,5 @@
 local T, C, L = unpack(TKUI)
 
-
 ----------------------------------------------------------------------------------------
 --	Communities skin
 ----------------------------------------------------------------------------------------
@@ -20,12 +19,10 @@ local function LoadSkin()
 		CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.ScrollBar,
 		CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.RecruitmentMessageInput.ScrollBar,
 		CommunitiesFrameCommunitiesList.ScrollBar,
-		CommunitiesFrameGuildDetailsFrameInfoScrollBar,
 		CommunitiesFrameGuildDetailsFrameNews.ScrollBar,
 		CommunitiesFrameGuildDetailsFrameNews.ScrollBar,
-		CommunitiesGuildLogFrameScrollBar,
-		CommunitiesGuildTextEditFrameScrollBar,
-		CommunitiesFrame.ApplicantList.ScrollBar
+		CommunitiesFrame.ApplicantList.ScrollBar,
+		CommunitiesGuildLogFrame.Container.ScrollFrame.ScrollBar
 	}
 
 	for i = 1, #scrollbars do
@@ -62,7 +59,6 @@ local function LoadSkin()
 	CommunitiesFrame.Chat.InsetFrame:SetTemplate("Overlay")
 	CommunitiesFrame.ChatTab:SetPoint("TOPLEFT", CommunitiesFrame, "TOPRIGHT", 5, -36)
 
-	-- CommunitiesFrame.MemberList.ScrollBar:SetPoint("BOTTOMLEFT", CommunitiesFrame.MemberList, "BOTTOMRIGHT", 0, 14)
 	CommunitiesFrame.MemberList:SetPoint("BOTTOMRIGHT", CommunitiesFrame, "BOTTOMRIGHT", -26, 31)
 
 	hooksecurefunc(CommunitiesFrame.ChatEditBox, "SetPoint", function(self, point, anchor, attachTo, x, y)
@@ -73,13 +69,13 @@ local function LoadSkin()
 		end
 	end)
 
-	CommunitiesFrameCommunitiesList.ScrollBar:SetPoint("TOPLEFT", CommunitiesFrameCommunitiesList, "TOPRIGHT", -3, 0)
-	CommunitiesFrameCommunitiesList.ScrollBar:SetPoint("BOTTOMLEFT", CommunitiesFrameCommunitiesList, "BOTTOMRIGHT", -3, -2)
+	CommunitiesFrameCommunitiesList.ScrollBar:SetPoint("TOPLEFT", CommunitiesFrameCommunitiesList, "TOPRIGHT", 6, -9)
+	CommunitiesFrameCommunitiesList.ScrollBar:SetPoint("BOTTOMLEFT", CommunitiesFrameCommunitiesList, "BOTTOMRIGHT", 6, 1)
 
 	T.SkinEditBox(CommunitiesFrame.ChatEditBox, nil, 18)
 
-	T.SkinDropDownBox(CommunitiesFrame.StreamDropDownMenu, nil, true)
-	T.SkinDropDownBox(CommunitiesFrame.CommunitiesListDropDownMenu)
+	T.SkinDropDownBox(CommunitiesFrame.StreamDropdown, nil, true)
+	T.SkinDropDownBox(CommunitiesFrame.CommunitiesListDropdown)
 
 	CommunitiesFrame.AddToChatButton:SkinButton()
 	CommunitiesFrame.CommunitiesControlFrame.CommunitiesSettingsButton:SkinButton()
@@ -200,13 +196,13 @@ local function LoadSkin()
 	ClubFinderGuildFinderFrame.ClubFinderSearchTab:SetPoint("TOPLEFT", CommunitiesFrame, "TOPRIGHT", 5, -30)
 	ClubFinderCommunityAndGuildFinderFrame.ClubFinderSearchTab:SetPoint("TOPLEFT", CommunitiesFrame, "TOPRIGHT", 5, -30)
 
-	T.SkinCheckBox(ClubFinderGuildFinderFrame.OptionsList.TankRoleFrame.CheckBox)
-	T.SkinCheckBox(ClubFinderGuildFinderFrame.OptionsList.HealerRoleFrame.CheckBox)
-	T.SkinCheckBox(ClubFinderGuildFinderFrame.OptionsList.DpsRoleFrame.CheckBox)
+	T.SkinCheckBox(ClubFinderGuildFinderFrame.OptionsList.TankRoleFrame.Checkbox)
+	T.SkinCheckBox(ClubFinderGuildFinderFrame.OptionsList.HealerRoleFrame.Checkbox)
+	T.SkinCheckBox(ClubFinderGuildFinderFrame.OptionsList.DpsRoleFrame.Checkbox)
 
-	T.SkinCheckBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.TankRoleFrame.CheckBox)
-	T.SkinCheckBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.HealerRoleFrame.CheckBox)
-	T.SkinCheckBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.DpsRoleFrame.CheckBox)
+	T.SkinCheckBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.TankRoleFrame.Checkbox)
+	T.SkinCheckBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.HealerRoleFrame.Checkbox)
+	T.SkinCheckBox(ClubFinderCommunityAndGuildFinderFrame.OptionsList.DpsRoleFrame.Checkbox)
 
 	ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:ClearAllPoints()
 	ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:SetPoint("TOP", ClubFinderCommunityAndGuildFinderFrame.OptionsList.SearchBox, "BOTTOM", 0, -3)
@@ -266,9 +262,9 @@ local function LoadSkin()
 
 		hooksecurefunc(t, "Initialize", function(self)
 			for button in self.SpecsPool:EnumerateActive() do
-				if button.CheckBox then
-					T.SkinCheckBox(button.CheckBox)
-					button.CheckBox:SetSize(26, 26)
+				if button.Checkbox then
+					T.SkinCheckBox(button.Checkbox)
+					button.Checkbox:SetSize(26, 26)
 				end
 			end
 		end)
@@ -290,7 +286,7 @@ local function LoadSkin()
 	NotificationSettings.Selector:StripTextures()
 	NotificationSettings:SetTemplate("Transparent")
 
-	T.SkinDropDownBox(CommunitiesFrame.NotificationSettingsDialog.CommunitiesListDropDownMenu, 190)
+	T.SkinDropDownBox(CommunitiesFrame.NotificationSettingsDialog.CommunitiesListDropdown, 190)
 	CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.QuickJoinButton:SetSize(25, 25)
 	T.SkinCheckBox(CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.QuickJoinButton)
 	CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.AllButton:SkinButton()
@@ -314,7 +310,7 @@ local function LoadSkin()
 
 	T.SkinEditBox(EditStreamDialog.NameEdit, nil, 18)
 	T.SkinEditBox(EditStreamDialog.Description)
-	T.SkinCheckBox(EditStreamDialog.TypeCheckBox)
+	-- T.SkinCheckBox(EditStreamDialog.TypeCheckBox)
 
 	EditStreamDialog.Accept:SkinButton()
 	EditStreamDialog.Delete:SkinButton()
@@ -339,7 +335,7 @@ local function LoadSkin()
 	Settings.Delete:SkinButton()
 	Settings.Cancel:SkinButton()
 
-	T.SkinDropDownBox(ClubFinderLanguageDropdown)
+	-- T.SkinDropDownBox(ClubFinderLanguageDropdown)
 
 	-- Avatar Picker
 	local Avatar = CommunitiesAvatarPickerDialog
@@ -379,7 +375,7 @@ local function LoadSkin()
 	CommunitiesFrame.CommunitiesControlFrame.GuildRecruitmentButton:SkinButton()
 	CommunitiesFrame.CommunitiesControlFrame.GuildControlButton:SkinButton()
 	T.SkinCheckBox(CommunitiesFrame.MemberList.ShowOfflineButton)
-	T.SkinDropDownBox(CommunitiesFrame.GuildMemberListDropDownMenu)
+	T.SkinDropDownBox(CommunitiesFrame.GuildMemberListDropdown)
 
 	hooksecurefunc(CommunitiesFrame.MemberList, "RefreshListDisplay", function(self)
 		for i = 1, self.ColumnDisplay:GetNumChildren() do
@@ -567,16 +563,6 @@ local function LoadSkin()
 	backdrop4:SetPoint("TOPLEFT", CommunitiesFrameGuildDetailsFrameInfo, "TOPLEFT", 591, -22)
 	backdrop4:SetPoint("BOTTOMRIGHT", CommunitiesFrameGuildDetailsFrameInfo, "BOTTOMRIGHT", 20, -1)
 
-	if CommunitiesFrameGuildDetailsFrameInfoMOTDScrollFrameScrollBar then -- BETA
-		CommunitiesFrameGuildDetailsFrameInfoMOTDScrollFrameScrollBar:SetPoint("TOPLEFT", CommunitiesFrameGuildDetailsFrameInfoMOTDScrollFrame, "TOPRIGHT", 0, -12)
-		CommunitiesFrameGuildDetailsFrameInfoMOTDScrollFrameScrollBar:SetPoint("BOTTOMLEFT", CommunitiesFrameGuildDetailsFrameInfoMOTDScrollFrame, "BOTTOMRIGHT", 0, 12)
-	end
-
-	if CommunitiesFrameGuildDetailsFrameInfoScrollBar then -- BETA
-		CommunitiesFrameGuildDetailsFrameInfoScrollBar:SetPoint("TOPLEFT", CommunitiesFrameGuildDetailsFrameInfo.DetailsFrame, "TOPRIGHT", 0, -12)
-		CommunitiesFrameGuildDetailsFrameInfoScrollBar:SetPoint("BOTTOMLEFT", CommunitiesFrameGuildDetailsFrameInfo.DetailsFrame, "BOTTOMRIGHT", 0, 13)
-	end
-
 	-- Guild Message EditBox
 	CommunitiesGuildTextEditFrame:StripTextures()
 	CommunitiesGuildTextEditFrame:SetTemplate("Transparent")
@@ -603,4 +589,4 @@ local function LoadSkin()
 	end
 end
 
-T.SkinFuncs["Blizzard_Communities"] = LoadSkin
+tinsert(T.SkinFuncs["TKUI"], LoadSkin)
