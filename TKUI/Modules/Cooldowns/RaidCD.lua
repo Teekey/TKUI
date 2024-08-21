@@ -97,7 +97,10 @@ local StopTimer = function(bar)
 end
 
 local UpdateCharges = function(bar)
-	local curCharges, maxCharges, start, duration = GetSpellCharges(20484)
+	local chargeInfo = C_Spell.GetSpellCharges(20484)
+	if not chargeInfo then return end
+
+	local curCharges, maxCharges, start, duration = chargeInfo.currentCharges, chargeInfo.maxCharges, chargeInfo.cooldownStartTime, chargeInfo.cooldownDuration
 	if curCharges == maxCharges then
 		bar.startTime = 0
 		bar.endTime = GetTime()
@@ -143,7 +146,7 @@ local OnMouseDown = function(self, button)
 		if self.isResses then
 			SendChatMessage(sformat(L_COOLDOWNS_COMBATRESS_REMAINDER.."%d, "..L_COOLDOWNS_NEXTTIME.."%s.", currentNumResses, self.right:GetText()), T.CheckChat())
 		else
-			SendChatMessage(sformat(L_COOLDOWNS.."%s - %s: %s", self.name, GetSpellLink(self.spellId), self.right:GetText()), T.CheckChat())
+			SendChatMessage(sformat(L_COOLDOWNS.."%s - %s: %s", self.name, C_Spell.GetSpellLink(self.spellId), self.right:GetText()), T.CheckChat())
 		end
 	elseif button == "RightButton" then
 		StopTimer(self)
@@ -183,10 +186,7 @@ local CreateBar = function()
 end
 
 local StartTimer = function(name, spellId)
-	local spellInfo = C_Spell.GetSpellInfo(spellId) -- Changed to spellInfo to clarify it's a table
-	local spellName = spellInfo and spellInfo.name or "Unknown Spell" -- Extracting the name from the spellInfo table
-	local icon = spellInfo and spellInfo.icon -- Get the icon if needed
-
+	local spell, _, icon = GetSpellInfo(spellId)
 	if charges and spellId == 20484 then
 		for _, v in pairs(Ressesbars) do
 			UpdateCharges(v)
@@ -201,7 +201,11 @@ local StartTimer = function(name, spellId)
 	local bar = CreateBar()
 	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(name))]
 	if charges and spellId == 20484 then
-		local curCharges, _, start, duration = GetSpellCharges(20484)
+		local curCharges, start, duration
+		local chargeInfo = C_Spell.GetSpellCharges(20484)
+		if chargeInfo then
+			curCharges, start, duration = chargeInfo.currentCharges, chargeInfo.cooldownStartTime, chargeInfo.cooldownDuration
+		end
 		currentNumResses = curCharges
 		bar.startTime = start
 		bar.endTime = start + duration
@@ -241,7 +245,7 @@ local StartTimer = function(name, spellId)
 	else
 		bar.startTime = GetTime()
 		bar.endTime = GetTime() + T.RaidSpells[spellId]
-		bar.left:SetText(format("%s - %s", name:gsub("%-[^|]+", ""), spellName)) -- Use spellName instead of spell
+		bar.left:SetText(format("%s - %s", name:gsub("%-[^|]+", ""), spell))
 		bar.right:SetText(FormatTime(T.RaidSpells[spellId]))
 		bar.isResses = false
 		bar.name = name
@@ -275,66 +279,66 @@ local StartTimer = function(name, spellId)
 end
 
 local OnEvent = function(self, event)
-    if event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED_NEW_AREA" then
-        if (select(2, IsInInstance()) == "raid" or select(2, IsInInstance()) == "party") and IsInGroup() then
-            self:RegisterEvent("SPELL_UPDATE_CHARGES")
-        else
-            self:UnregisterEvent("SPELL_UPDATE_CHARGES")
-            charges = nil
-            inBossCombat = nil
-            currentNumResses = 0
-            Ressesbars = {}
-        end
-    end
-    if event == "SPELL_UPDATE_CHARGES" then
-        local chargeInfo = C_Spell.GetSpellCharges(20484)
-        charges = chargeInfo and chargeInfo.charges
-        if charges then
-            if not inBossCombat then
-                inBossCombat = true
-            end
-            StartTimer(L_COOLDOWNS_COMBATRESS, 20484)
-        elseif not charges and inBossCombat then
-            inBossCombat = nil
-            currentNumResses = 0
-            for _, v in pairs(Ressesbars) do
-                StopTimer(v)
-            end
-        end
-    end
-    if event == "COMBAT_LOG_EVENT_UNFILTERED" then
-        local _, eventType, _, _, sourceName, sourceFlags, _, _, _, _, _, spellId = CombatLogGetCurrentEventInfo()
-        if band(sourceFlags, filter) == 0 then return end
-        if eventType == "SPELL_RESURRECT" or eventType == "SPELL_CAST_SUCCESS" or eventType == "SPELL_AURA_APPLIED" then
-            if sourceName then
-                sourceName = sourceName:gsub("-.+", "")
-            else
-                return
-            end
-            if T.RaidSpells[spellId] and show[select(2, IsInInstance())] and IsInGroup() then
-                if (sourceName == T.name and C.raidcooldown.show_self == true) or sourceName ~= T.name then
-                    StartTimer(sourceName, spellId)
-                end
-            end
-        end
-    elseif event == "ZONE_CHANGED_NEW_AREA" and select(2, IsInInstance()) == "arena" or not IsInGroup() then
-        for _, v in pairs(Ressesbars) do
-            StopTimer(v)
-        end
-        for _, v in pairs(bars) do
-            v.endTime = 0
-        end
-    elseif event == "ENCOUNTER_END" and select(2, IsInInstance()) == "raid" then
-        for _, v in pairs(bars) do
-            v.endTime = 0
-        end
-    end
+	if event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED_NEW_AREA" then
+		if (select(2, IsInInstance()) == "raid" or select(2, IsInInstance()) == "party") and IsInGroup() then
+			self:RegisterEvent("SPELL_UPDATE_CHARGES")
+		else
+			self:UnregisterEvent("SPELL_UPDATE_CHARGES")
+			charges = nil
+			inBossCombat = nil
+			currentNumResses = 0
+			Ressesbars = {}
+		end
+	end
+	if event == "SPELL_UPDATE_CHARGES" then
+		local chargeInfo = C_Spell.GetSpellCharges(20484)
+		charges = chargeInfo and chargeInfo.currentCharges or nil
+		if charges then
+			if not inBossCombat then
+				inBossCombat = true
+			end
+			StartTimer(L_COOLDOWNS_COMBATRESS, 20484)
+		elseif not charges and inBossCombat then
+			inBossCombat = nil
+			currentNumResses = 0
+			for _, v in pairs(Ressesbars) do
+				StopTimer(v)
+			end
+		end
+	end
+	if event == "COMBAT_LOG_EVENT_UNFILTERED" then
+		local _, eventType, _, _, sourceName, sourceFlags, _, _, _, _, _, spellId = CombatLogGetCurrentEventInfo()
+		if band(sourceFlags, filter) == 0 then return end
+		if eventType == "SPELL_RESURRECT" or eventType == "SPELL_CAST_SUCCESS" or eventType == "SPELL_AURA_APPLIED" then
+			if sourceName then
+				sourceName = sourceName:gsub("-.+", "")
+			else
+				return
+			end
+			if T.RaidSpells[spellId] and show[select(2, IsInInstance())] and IsInGroup() then
+				if (sourceName == T.name and C.raidcooldown.show_self == true) or sourceName ~= T.name then
+					StartTimer(sourceName, spellId)
+				end
+			end
+		end
+	elseif event == "ZONE_CHANGED_NEW_AREA" and select(2, IsInInstance()) == "arena" or not IsInGroup() then
+		for _, v in pairs(Ressesbars) do
+			StopTimer(v)
+		end
+		for _, v in pairs(bars) do
+			v.endTime = 0
+		end
+	elseif event == "ENCOUNTER_END" and select(2, IsInInstance()) == "raid" then
+		for _, v in pairs(bars) do
+			v.endTime = 0
+		end
+	end
 end
 
 for spell in pairs(T.RaidSpells) do
-	local name = C_Spell.GetSpellInfo(spell)
+	local name = GetSpellInfo(spell)
 	if not name then
-		print("|cffff0000ShestakUI: RaidCD spell ID ["..tostring(spell).."] no longer exists!|r")
+		print("|cffff0000TKUI: RaidCD spell ID ["..tostring(spell).."] no longer exists!|r")
 	end
 end
 

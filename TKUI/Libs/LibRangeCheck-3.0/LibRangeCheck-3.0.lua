@@ -725,7 +725,7 @@ local function createCheckerList(spellList, itemList, interactList)
       for i = 1, #items do
         local item = items[i]
         -- Check if C_Item is available before using it
-        if C_Item and Item:CreateFromItemID(item):IsItemDataCached() and C_Item.GetItemInfo(item) then
+        if C_Item and C_Item.CreateFromItemID and Item:CreateFromItemID(item):IsItemDataCached() and C_Item.GetItemInfo(item) then
           addChecker(res, range, nil, checkers_Item[item], "item:" .. item)
           break
         end

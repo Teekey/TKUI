@@ -619,10 +619,12 @@ local function HandleDeath(destName, destGUID)
             if lastDamage.spellId == 0 and lastDamage.damageType == "Melee" then
                 deathMessage = string_format("%s died to %s (%d Melee).", destColor, sourceColor, lastDamage.amount)
             elseif lastDamage.damageType ~= "" then
+                -- Ensure lastDamage.school is valid before calling GetSchoolString
+                local schoolString = lastDamage.school and C_Spell.GetSchoolString(lastDamage.school) or "Unknown"
                 deathMessage = string_format("%s died to %d %s Damage.", destColor, lastDamage.amount, lastDamage.damageType)
             else
                 local spellLink = GetSpellLinkWithIcon(lastDamage.spellId)
-                deathMessage = string_format("%s died to %s %s (%d %s Damage).", destColor, sourceColor, spellLink, lastDamage.amount, GetSchoolString(lastDamage.school))
+                deathMessage = string_format("%s died to %s %s (%d %s Damage).", destColor, sourceColor, spellLink, lastDamage.amount, schoolString)
             end
         else
             deathMessage = string_format("%s has died.", destColor)

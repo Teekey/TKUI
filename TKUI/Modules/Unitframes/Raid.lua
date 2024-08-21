@@ -6,7 +6,7 @@ local UF = T.UF
 -- Upvalues
 local unpack = unpack
 local raid_width = C.raidframe.raid_width
-local raid_height = C.raidframe.raid_height
+local raid_height = C.raidframe.raid_height + C.raidframe.raid_power_height + 4
 local raid_power_height = C.raidframe.raid_power_height
 
 
@@ -37,8 +37,7 @@ oUF:Factory(function(self)
 	oUF:RegisterStyle("TKUI_Raid", CreateRaidFrame)
 	oUF:SetActiveStyle("TKUI_Raid")
 	local raid = {}
-	for i = 1, C.raidframe.raid_groups do
-		local raidgroup = self:SpawnHeader("oUF_Raid" .. i, nil, "custom [@raid6,exists] show;hide",
+		local raidgroup = self:SpawnHeader("oUF_Raid", nil, "custom [@raid6,exists] show;hide",
 			"oUF-initialConfigFunction", [[
 					local header = self:GetParent()
 					self:SetWidth(header:GetAttribute("initial-width"))
@@ -47,32 +46,23 @@ oUF:Factory(function(self)
 			"initial-width", raid_width,
 			"initial-height", T.Scale(raid_height),
 			"showRaid", true,
-			"groupFilter", tostring(i),
+			-- "groupFilter", tostring(i),
 			"groupBy", C.raidframe.by_role and "ASSIGNEDROLE",
 			"groupingOrder", C.raidframe.by_role and "TANK,HEALER,DAMAGER,NONE",
 			"sortMethod", C.raidframe.by_role and "NAME",
-			"maxColumns", 5,
-			"unitsPerColumn", 1,
-			"columnSpacing", T.Scale(7),
-			"yOffset", T.Scale(-5),
-			"point", "TOPLEFT",
-			"columnAnchorPoint", "TOP"
+			"maxColumns", 8,
+			"unitsPerColumn", 5,
+			"columnSpacing", T.Scale(14),
+			"yOffset", T.Scale(-60),
+			"point", "TOP",
+			"columnAnchorPoint", "RIGHT"
 		)
-		raidgroup:SetPoint("TOPLEFT", _G["RaidAnchor" .. i])
-		_G["RaidAnchor" .. i]:SetSize(raid_width, T.Scale(raid_height) * 5 + T.Scale(7) * 4)
-		if i == 1 then
-			_G["RaidAnchor" .. i]:SetPoint(unpack(C.position.unitframes.raid))
-		else
-			_G["RaidAnchor" .. i]:SetPoint("TOPLEFT", _G["RaidAnchor" .. i - 1], "TOPRIGHT", 7, 0)
-		end
-		raid[i] = raidgroup
-	end
+		raidgroup:SetPoint("RIGHT", _G["RaidAnchor"])
+		_G["RaidAnchor"]:SetSize(raid_width, T.Scale(raid_height) * 5 + T.Scale(7) * 4)
+		_G["RaidAnchor"]:SetPoint(unpack(C.position.unitframes.raid))
 end)
 
--- Create anchors
-for i = 1, C.raidframe.raid_groups do
-	local raid = CreateFrame("Frame", "RaidAnchor" .. i, UIParent)
-end
+local raid = CreateFrame("Frame", "RaidAnchor", UIParent)
 
 
 ----------------------------------------------------------------------------------------

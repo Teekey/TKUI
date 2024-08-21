@@ -6,6 +6,8 @@ local DB = T.DB
 ----------------------------------------------------------------------------------------
 
 function DB:CreateClockModule()
+    local combatStartTime = 0 -- Initialize to 0 or a suitable default value
+
     -- Create the DB: module frame
     self.clockModule = CreateFrame("Frame", "clockModule", self.TKUIBar)
     self.clockModule:SetSize(80, 35)
