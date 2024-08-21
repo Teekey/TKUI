@@ -24,6 +24,7 @@ local function CreateRaidFrame(self)
     UF.CreateRaidDebuffs(self)
     UF.CreateRaidTargetIndicator(self)
     UF.CreateDebuffHighlight(self)
+	UF.CreatePartyAuraWatch(self)
     UF.CreateGroupIcons(self)
     UF.ApplyGroupSettings(self)
 
